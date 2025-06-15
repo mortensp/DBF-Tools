@@ -1,0 +1,135 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <Platforms>AnyCPU;x64</Platforms>
+	<ApplicationIcon>Images\projector_48x48.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ProdTest|AnyCPU'">
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ProdTest|x64'">
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|AnyCPU'">
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="AudioFiles\**" />
+    <Compile Remove="Converters\**" />
+    <EmbeddedResource Remove="AudioFiles\**" />
+    <EmbeddedResource Remove="Converters\**" />
+    <None Remove="AudioFiles\**" />
+    <None Remove="Converters\**" />
+    <Page Remove="AudioFiles\**" />
+    <Page Remove="Converters\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="CountDownTimer.cs" />
+    <Compile Remove="UserControls\CountdownTimerOld.cs" />
+    <Compile Remove="UserControls\ModalContentCommands.cs" />
+    <Compile Remove="UserControls\ModalContentPresenter.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="UserControls\CountdownTimerOld.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="AudioFiles\school-bell.mp3" />
+  </ItemGroup>
+
+
+	<ItemGroup>
+		<PackageReference Include="Baksteen.Extensions.DeepCopy" Version="1.0.4" />
+		<PackageReference Include="Caliburn.Micro" Version="4.0.230" />
+		<PackageReference Include="NAudio" Version="2.2.1" />
+		<PackageReference Include="NetCoreAudio" Version="2.0.0" />
+		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+		<PackageReference Include="Microsoft.Windows.Compatibility" Version="9.0.5" />
+		<PackageReference Include="WpfScreenHelper" Version="2.1.1" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="syncfusion.ui.wpf.net" Version="29.2.7" />
+
+		<PackageReference Include="Syncfusion.SfBusyIndicator.WPF" Version="29.2.7" />
+		<PackageReference Include="Syncfusion.SfGrid.WPF" Version="29.2.7" />
+		<PackageReference Include="Syncfusion.Shared.WPF" Version="29.2.7" />
+		<PackageReference Include="Syncfusion.Shared.Base" Version="29.2.7" />
+		<PackageReference Include="Syncfusion.Grid.Wpf" Version="29.2.7" />
+
+		<PackageReference Include="Syncfusion.SfSkinManager.WPF" Version="29.2.7" />
+		<PackageReference Include="Syncfusion.Themes.FluentLight.WPF" Version="29.2.7" />
+		<PackageReference Include="Syncfusion.Themes.MaterialDark.WPF" Version="29.2.7" />
+		<PackageReference Include="Syncfusion.Themes.Office2019Colorful.WPF" Version="29.2.7" />
+		<PackageReference Include="Syncfusion.Tools.WPF" Version="29.2.7" />
+	</ItemGroup>
+
+		<ItemGroup>
+    <Folder Include="DataSets\" />
+  </ItemGroup>
+
+		<ItemGroup>
+		  <Compile Update="Properties\Resources.Designer.cs">
+		    <DesignTime>True</DesignTime>
+		    <AutoGen>True</AutoGen>
+		    <DependentUpon>Resources.resx</DependentUpon>
+		  </Compile>
+		  <Compile Update="Properties\Settings.Designer.cs">
+		    <DesignTimeSharedInput>True</DesignTimeSharedInput>
+		    <AutoGen>True</AutoGen>
+		    <DependentUpon>Settings.settings</DependentUpon>
+		  </Compile>
+		</ItemGroup>
+
+		<ItemGroup>
+		  <EmbeddedResource Update="Properties\Resources.resx">
+		    <Generator>ResXFileCodeGenerator</Generator>
+		    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		  </EmbeddedResource>
+		</ItemGroup>
+
+  <ItemGroup>
+    <None Update="Images\projector.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\projector_48x48.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>
