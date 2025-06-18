@@ -11,7 +11,7 @@ namespace DBF.DataModel
 
         public DateTime Dato => DateTime.Parse(Date);
 
-        public override string ToString() => Dato.ToShortDateString()+" "+Dato.ToShortTimeString();
+        public override string ToString() => string.IsNullOrEmpty(Date) ? null:Dato.ToShortDateString()+" "+Dato.ToShortTimeString();
 
 
         public override bool Equals(object obj)

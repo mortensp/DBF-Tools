@@ -1,17 +1,18 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Media;
-using Brush = System.Windows.Media.Brush;
 using Caliburn.Micro;
-using System.Text.Json.Serialization;
+using static System.TimeZoneInfo;
+using Brush = System.Windows.Media.Brush;
 
 namespace DBF.DataModel
 {
     public class TimerSetting : Preset
     {
         private Color? color;
-        private Brush  background = Brushes.White;
-
+        //private Brush  background = Brushes.White;
         public TimerSetting( string name = null
                            , bool customPreset = true
                            , bool teamMatch = false
@@ -32,11 +33,11 @@ namespace DBF.DataModel
                            , Visibility visibility = Visibility.Visible
                            ) : base(name, customPreset, teamMatch, rounds, boardsPerRound, breakAfter, hours, minutes, seconds, transitionTime, breakTime)
         {
-            Group  = group;
-            Info   = info;
-            Sound  = sound;
-            Volume = volume;
-            Color  = color;
+            Group      = group;
+            Info       = info;
+            Sound      = sound;
+            Volume     = volume;
+            Color      = color;
             Visibility = visibility;
         }
 
@@ -53,37 +54,39 @@ namespace DBF.DataModel
             }
         }
 
-        public string     Group      { get; set; }
-        public string     Info       { get; set; }
-        [JsonIgnore]
-        public Brush      Background { get; private set; }
-        public string     Sound      { get; set; }
-        public int        Volume     { get; set; }
-        public Visibility Visibility { get; set; }
+                     public string     Group       { get; set; }
+                     public string     Info        { get; set; }
+        [JsonIgnore] public Brush      Background  { get; set; }
+                     public string     Sound       { get; set; }
+                     public int        Volume      { get; set; }
+                     public Visibility Visibility  { get; set; }
+        [JsonIgnore] public TimeSpan   WarningTime { get; set; }
 
         public new void Update(Preset preset)
         {
-            Name           = preset.Name;
-            CustomPreset   = preset.CustomPreset;
-            TeamMatch      = preset.TeamMatch;
-            Rounds         = preset.Rounds;
-            BoardsPerRound = preset.BoardsPerRound;
-            BreakAfter     = preset.BreakAfter;
-            Hours          = preset.Hours;
-            Minutes        = preset.Minutes;
-            Seconds        = preset.Seconds;
-            TransitionTime = preset.TransitionTime;
-            BreakTime      = preset.BreakTime;
+            Name              = preset.Name;
+            CustomPreset      = preset.CustomPreset;
+            TeamMatch         = preset.TeamMatch;
+            Rounds            = preset.Rounds;
+            BoardsPerRound    = preset.BoardsPerRound;
+            BreakAfter        = preset.BreakAfter;
+            Hours             = preset.Hours;
+            Minutes           = preset.Minutes;
+            Seconds           = preset.Seconds;
+            TransitionMinutes = preset.TransitionMinutes;
+            BreakMinutes      = preset.BreakMinutes;
 
             if (preset is TimerSetting tSetting)
             {
-                Group  = tSetting.Group;
-                Info   = tSetting.Info;
-                Sound  = tSetting.Sound;
-                Volume = tSetting.Volume;
-                Color  = tSetting.Color;
+                Group      = tSetting.Group;
+                Info       = tSetting.Info;
+                Sound      = tSetting.Sound;
+                Volume     = tSetting.Volume;
+                Color      = tSetting.Color;
                 Visibility = tSetting.Visibility;
             }
+
+            WarningTime = new TimeSpan(0, 5 - TransitionMinutes, 0);
         }
     }
 }

@@ -45,7 +45,7 @@ namespace DBF
 
                     if (File.Exists(fileDataPath))
                     {
-                        Debug.WriteLine($"Syncfusion License file: {fileDataPath}");
+                        //Debug.WriteLine($"Syncfusion License file: {fileDataPath}");
 
                         foreach (var line in File.ReadLines(fileDataPath, Encoding.UTF8))
                         {

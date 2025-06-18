@@ -36,8 +36,8 @@ namespace DBF.DataModel
             Hours          = hours;
             Minutes        = minutes;
             Seconds        = seconds;
-            TransitionTime = transitionTime;
-            BreakTime      = breakTime;
+            TransitionMinutes = transitionTime;
+            BreakMinutes      = breakTime;
         }
 
         public Preset(Preset other)
@@ -51,8 +51,8 @@ namespace DBF.DataModel
             Hours          = other.Hours;
             Minutes        = other.Minutes;
             Seconds        = other.Seconds;
-            TransitionTime = other.TransitionTime;
-            BreakTime      = other.BreakTime;
+            TransitionMinutes = other.TransitionMinutes;
+            BreakMinutes      = other.BreakMinutes;
         }
 
                 public string Name
@@ -88,8 +88,8 @@ namespace DBF.DataModel
         public int  Hours          { get; set; }
         public int  Minutes        { get; set; }
         public int  Seconds        { get; set; }
-        public int  TransitionTime { get; set; }
-        public int  BreakTime      { get; set; }
+        public int  TransitionMinutes { get; set; }
+        public int  BreakMinutes      { get; set; }
 
    
 
@@ -103,8 +103,8 @@ namespace DBF.DataModel
                  && Hours == other.Hours
                  && Minutes == other.Minutes
                  && Seconds == other.Seconds
-                 && TransitionTime == other.TransitionTime
-                 && BreakTime == other.BreakTime;
+                 && TransitionMinutes == other.TransitionMinutes
+                 && BreakMinutes == other.BreakMinutes;
         }
 
         override public string ToString() => Name;
@@ -119,8 +119,8 @@ namespace DBF.DataModel
             Hours          = other.Hours;
             Minutes        = other.Minutes;
             Seconds        = other.Seconds;
-            TransitionTime = other.TransitionTime;
-            BreakTime      = other.BreakTime;             
+            TransitionMinutes = other.TransitionMinutes;
+            BreakMinutes      = other.BreakMinutes;             
         }
     }
 }

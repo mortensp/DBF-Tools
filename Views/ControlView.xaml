@@ -7,12 +7,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:DBF.UserControls"
+      xmlns:conv="clr-namespace:DBF.Converters"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
-    
     mc:Ignorable="d">
 
-    <UserControl.Resources>
+    <!--<UserControl.Resources>
 
         <DataTemplate x:Key="NamesViewTemplate">
             <Grid
@@ -26,7 +26,7 @@
                     Content="{Binding Data.Names}" />
             </Grid>
         </DataTemplate>
-    </UserControl.Resources>
+    </UserControl.Resources>-->
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -68,53 +68,10 @@
 
         <TabControl Grid.ColumnSpan="2" Grid.Row="1"
             MinHeight="400">
-            <TabItem Header="Test">
-                <Viewbox>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-
-                        <WrapPanel Grid.Row="0" Grid.ColumnSpan="2" >
-                            <Button
-                                Width="70"
-                                Margin="5,0"
-                                cal:Message.Attach="[Event Click] = [Action AddTimer]"
-                                IsEnabled="{Binding Configuration.TimersCanBeAdded, UpdateSourceTrigger=PropertyChanged}"
-                                Content="Tilføj ur" />
-                            <Button
-                                Width="70"
-                                Margin="5,0"
-                                cal:Message.Attach="[Event Click] = [Action Help]"
-                                Content="Hjælp" />
-                        </WrapPanel>
-                        
-                        <local:BridgeTimerControl x:Name="timer1" Grid.Column="0" Grid.Row="1"
-                            Setting="{Binding TimerSettings[0],UpdateSourceTrigger=PropertyChanged}" />
-
-                        <local:BridgeTimerControl x:Name="timer2" Grid.Column="1" Grid.Row="1"
-                            Setting="{Binding TimerSettings[1],UpdateSourceTrigger=PropertyChanged}" />
-
-                        <local:BridgeTimerControl x:Name="timer3" Grid.Column="0" Grid.Row="2"
-                            Setting="{Binding TimerSettings[2],UpdateSourceTrigger=PropertyChanged}" />
-
-                        <local:BridgeTimerControl x:Name="timer4" Grid.Column="1" Grid.Row="2"
-                            Setting="{Binding TimerSettings[3],UpdateSourceTrigger=PropertyChanged}" />
-
-                    </Grid>
-                </Viewbox>
-            </TabItem>
-
+          
             <TabItem Header="Par - Startliste">
-                <!--<Viewbox VerticalAlignment="Top">-->
-                <syncfusion:SfDataGrid Name="dgStart"
+                <local:StartListControl x:Name="startListControl"/>
+                <!--<syncfusion:SfDataGrid Name="dgStart"
                     Padding="5,0,5,0"
                     AllowEditing="False"
                     AllowResizingColumns="True"
@@ -201,11 +158,10 @@
                         <syncfusion:GroupColumnDescription ColumnName="Group" SortGroupRecords="True" />
                     </syncfusion:SfDataGrid.GroupColumnDescriptions>
 
-                </syncfusion:SfDataGrid>
-                <!--</Viewbox>-->
+                </syncfusion:SfDataGrid>-->
             </TabItem>
 
-            <TabItem Header="Hold - Startliste">
+            <!--<TabItem Header="Hold - Startliste">
                 <syncfusion:SfDataGrid Name="dgStartTeams"
                     AllowEditing="False"
                     AllowResizingColumns="True"
@@ -224,29 +180,6 @@
                     RowHeight="34"
                     ScrollViewer.CanContentScroll="True">
 
-                    <!--<interactivity:Interaction.Behaviors>
-                        <wpf:DataGridRowHeightBehavior />
-                    </interactivity:Interaction.Behaviors>-->
-
-                    <!--<syncfusion:SfDataGrid.DetailsViewDefinition>
-                        <syncfusion:TemplateViewDefinition RowTemplate="{StaticResource NamesViewTemplate}" />
-                    </syncfusion:SfDataGrid.DetailsViewDefinition>-->
-
-                    <!--<syncfusion:SfDataGrid.DetailsViewDefinition>
-                        <syncfusion:GridViewDefinition RelationalColumn="Players">
-                            <syncfusion:GridViewDefinition.DataGrid>
-                                <syncfusion:SfDataGrid x:Name="FirstLevelNestedGrid1"
-                                    AutoGenerateColumns="False"
-                                    HeaderRowHeight="0">
-                                    <syncfusion:SfDataGrid.Columns>
-                                        <syncfusion:GridTextColumn MappingName="Name" />
-                                        <syncfusion:GridTextColumn MappingName="HAC" />
-                                    </syncfusion:SfDataGrid.Columns>
-                                </syncfusion:SfDataGrid>
-                            </syncfusion:GridViewDefinition.DataGrid>
-                        </syncfusion:GridViewDefinition>
-                    </syncfusion:SfDataGrid.DetailsViewDefinition>-->
-
                     <syncfusion:SfDataGrid.Columns>
                         <syncfusion:GridTextColumn
                             HeaderText="Rk"
@@ -259,7 +192,7 @@
                             MappingName="TeamNo"
                             TextAlignment="Center" />
 
-                        <syncfusion:GridTextColumn x:Name="Name"
+                        <syncfusion:GridTextColumn x:Name="TeamName"
                             Width="250"
                             Padding="5,0"
                             AllowSorting="False"
@@ -287,18 +220,7 @@
                             MappingName="Names"
                             MinimumWidth="1000"
                             TextAlignment="Left" />
-
                     </syncfusion:SfDataGrid.Columns>
-
-                    <!--<syncfusion:SfDataGrid.StackedHeaderRows>
-                        <syncfusion:StackedHeaderRow>
-                            <syncfusion:StackedHeaderRow.StackedColumns>
-                                <syncfusion:StackedColumn ChildColumns="SectionRank,HACRankSection" HeaderText="Placering" />
-                                <syncfusion:StackedColumn ChildColumns="Result,DeltaHAC,MP" HeaderText="Resultat" />
-                                <syncfusion:StackedColumn ChildColumns="TournamentRank,TournamentResult,HACTotal" HeaderText="Turneringen" />
-                            </syncfusion:StackedHeaderRow.StackedColumns>
-                        </syncfusion:StackedHeaderRow>
-                    </syncfusion:SfDataGrid.StackedHeaderRows>-->
 
                     <syncfusion:SfDataGrid.SortColumnDescriptions>
                         <syncfusion:SortColumnDescription ColumnName="Group" SortDirection="Ascending" />
@@ -310,24 +232,19 @@
                     </syncfusion:SfDataGrid.GroupColumnDescriptions>
 
                 </syncfusion:SfDataGrid>
-            </TabItem>
+            </TabItem>-->
 
             <TabItem Header="Bridge Ure">
-
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="108*" />
-                        <ColumnDefinition Width="29*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                </Grid>
+                <Viewbox>
+                    <local:TimersPanel                    
+                    Timers="{Binding Configuration.BridgeTimers}"
+                    TimersCanBeAdded="{Binding Configuration.TimersCanBeAdded}" />
+                </Viewbox>
             </TabItem>
 
             <TabItem Header="Par Resultater">
-                <syncfusion:SfDataGrid Name="dgResult"
+                <local:ResultsControl x:Name="resultsControl"></local:ResultsControl>
+                <!--<syncfusion:SfDataGrid Name="dgResult"
                     Padding="5,0,5,0"
                     AllowEditing="False"
                     AllowResizingColumns="True"
@@ -369,7 +286,7 @@
                             MappingName="AvgHAC"
                             TextAlignment="Right" />
 
-                        <!--  Placering  -->
+                        --><!--  Placering  --><!--
                         <syncfusion:GridNumericColumn
                             HeaderText="Sek"
                             HorizontalHeaderContentAlignment="Center"
@@ -383,8 +300,7 @@
                             MappingName="HACRankSection"
                             TextAlignment="Center" />
 
-                        <!--  Sektionens Score  -->
-                        <!--<sf:GridNumericColumn HeaderText="Forventet" MappingName="ExpectedScore" />-->
+                        --><!--  Sektionens Score  --><!--
                         <syncfusion:GridPercentColumn
                             HeaderText="Opnået"
                             HorizontalHeaderContentAlignment="Center"
@@ -410,7 +326,7 @@
                             MappingName="MP"
                             TextAlignment="Center" />
 
-                        <!--  Tourneringens Score  -->
+                        --><!--  Tourneringens Score  --><!--
                         <syncfusion:GridNumericColumn
                             HeaderText="Rank."
                             HorizontalHeaderContentAlignment="Center"
@@ -448,7 +364,7 @@
                     <syncfusion:SfDataGrid.GroupColumnDescriptions>
                         <syncfusion:GroupColumnDescription ColumnName="Group" />
                     </syncfusion:SfDataGrid.GroupColumnDescriptions>
-                </syncfusion:SfDataGrid>
+                </syncfusion:SfDataGrid>-->
             </TabItem>
 
         </TabControl>

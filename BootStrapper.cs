@@ -1,19 +1,23 @@
 ﻿//using BigBin;
-using Caliburn.Micro;
-using DBF.ViewModels;
 using System.Data;
 using System.Globalization;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Threading;
+using Caliburn.Micro;
 using DBF.DataModel;
+using DBF.ViewModels;
+using DBF.Views;
+using Microsoft.DotNet.DesignTools.ViewModels;
 
 namespace DBF
 {
     //[TraceOn()]
     public class Bootstrapper : BootstrapperBase
     {
+     
+
         public Bootstrapper()
         {
             FrameworkElement.LanguageProperty
@@ -30,7 +34,6 @@ namespace DBF
         //{
         //    Console.SetOut(new ToDebugWriter());
         //}
-
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
             DisplayRootViewForAsync<ShellViewModel>();
@@ -59,7 +62,19 @@ namespace DBF
                         else
                             _container.RegisterSingleton(viewModel, null, viewModel);
 
-                var cfg = _container.GetInstance<Configuration>(null);            
+            var defaultLocateTypeForModelType = ViewLocator.LocateTypeForModelType;
+
+            ViewLocator.LocateTypeForModelType = (Type modelType, DependencyObject displayLocation, object context) =>
+                                                     {
+                                                         if (modelType == typeof(ControlViewModel))
+                                                         if(  context   is string viewName
+                                                         &&  viewName  == "ProjectorView")
+                                                             return typeof(ProjectorView);
+
+                                                         return defaultLocateTypeForModelType(modelType, displayLocation, context);
+                                                     };
+
+                var cfg = _container.GetInstance<Configuration>(null);
             }
 
             protected override object GetInstance(Type service, string key)

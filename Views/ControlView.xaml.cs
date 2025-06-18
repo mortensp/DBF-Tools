@@ -14,25 +14,20 @@ namespace DBF.Views
         {
             InitializeComponent();
 
-            this.dgStartTeams.Loaded += dgStartTeams_Loaded;
+            //this.dgStartTeams.Loaded += dgStartTeams_Loaded;
         }
 
-        private void dgStartTeams_Loaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            this.dgStartTeams.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.ApplicationIdle
-                                                    , new Action(() =>
-                                                                 {
-                                                                     this.dgStartTeams.ExpandAllDetailsView();
-                                                                 }));
-        }
+        //private void dgStartTeams_Loaded(object sender, System.Windows.RoutedEventArgs e)          => Exnand();
 
-        private void DataGrid_SortColumnsChanged(object sender, GridSortColumnsChangedEventArgs e)
-        {
-            this.dgStartTeams.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.ApplicationIdle
-                                                    , new Action(() =>
-                                                                 {
-                                                                     this.dgStartTeams.ExpandAllDetailsView();
-                                                                 }));
-        }
+        //private void DataGrid_SortColumnsChanged(object sender, GridSortColumnsChangedEventArgs e) => Exnand();
+
+        //private void Exnand()
+        //{
+        //    this.dgStartTeams.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.ApplicationIdle
+        //                                            , new Action(() =>
+        //                                                         {
+        //                                                             this.dgStartTeams.ExpandAllDetailsView();
+        //                                                         }));
+        //}
     }
 }

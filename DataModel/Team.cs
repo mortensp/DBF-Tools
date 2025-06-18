@@ -42,7 +42,7 @@ namespace DBF.DataModel
             get
             {
                 var names = Players?.Select(p => p.NameWithSubstitute).ToList();
-                return names != null ? string.Join(",  ", names) : string.Empty;
+                return names != null ? string.Join(",  ", names).Trim() : string.Empty;
             }
         }
 

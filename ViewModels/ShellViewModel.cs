@@ -17,7 +17,7 @@ namespace DBF.ViewModels
             var screen = IoC.Get<ControlViewModel>();
 
             await ActivateItemAsync(screen);
-            await screen.ShowProjector();
+            //await screen.ShowProjector();
         }
         #endregion
     }

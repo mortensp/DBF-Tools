@@ -1,5 +1,5 @@
 ﻿<UserControl x:Name="root"
-    x:Class="DBF.UserControls.BridgeTimerControl"
+    x:Class="DBF.UserControls.BridgeTimerControlOld"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,7 +8,6 @@
     xmlns:model="clr-namespace:DBF.DataModel"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Visibility="{Binding Timer.Visibility, ElementName=root}"
     mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -17,8 +16,9 @@
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10" />
                 </Style>
-            </Style.Resources>
 
+
+            </Style.Resources>
             <Setter Property="Height" Value="20" />
             <Setter Property="Width" Value="30" />
             <Setter Property="FontSize" Value="12" />
@@ -27,6 +27,12 @@
             <Setter Property="Background" Value="#FBFBFB" />
             <Setter Property="Padding" Value="0,0,0,1" />
         </Style>
+
+        <!--  Vi fanger opdateringer i Configurationen mht. NotLastTimer  -->
+        <!--<ObjectDataProvider x:Key="ConfigProvider"
+                        ObjectType="{x:Type model:Configuration}"
+                        MethodName="get_NotLastTimer" />-->
+
     </UserControl.Resources>
 
     <UserControl.Triggers>
@@ -56,7 +62,7 @@
             <StackPanel>
                 <!--  Timer Display  -->
                 <Border Padding="0" CornerRadius="6">
-                    <Grid Background="{Binding Timer.Background, UpdateSourceTrigger=PropertyChanged}" TextBlock.FontSize="20">
+                    <Grid Background="{Binding Setting.Background, UpdateSourceTrigger=PropertyChanged}" TextBlock.FontSize="20">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="50" />
                             <ColumnDefinition Width="*" />
@@ -76,13 +82,13 @@
                             Margin="0,0,0,4"
                             HorizontalAlignment="Center"
                             FontWeight="Bold"
-                            Text="{Binding Timer.Round, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding Round, UpdateSourceTrigger=PropertyChanged}" />
 
                         <!--  Close button  -->
                         <Button x:Name="btnClose" Grid.Column="2" Grid.Row="0"
                             Width="24"
                             Height="24"
-                            Margin="0,-4,-4,0"
+                            Margin="0,-8,-8,0"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
                             Background="Transparent"
@@ -91,16 +97,16 @@
                             Content="X"
                             Cursor="Hand"
                             ToolTip="Luk uret og sluk"
-                            Visibility="{Binding CanClose, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            Visibility="{Binding Configuration.TimersCanClose, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                         <TextBlock Grid.ColumnSpan="3" Grid.Row="1"
                             Margin="0,0,8,0"
                             HorizontalAlignment="Center"
                             FontSize="44"
                             FontWeight="Bold"
-                            Text="{Binding Timer.Time, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding Time, UpdateSourceTrigger=PropertyChanged}" />
 
-                        <!--<TextBlock Grid.Column="2" Grid.Row="1"
+                        <TextBlock x:Name="warning" Grid.Column="2" Grid.Row="1"
                             Margin="-25,-5,0,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
@@ -108,59 +114,32 @@
                             FontSize="34"
                             Foreground="Orange"
                             Text="⚠"
-                            Visibility="{Binding Timer.WarningVisiblity, UpdateSourceTrigger=PropertyChanged}" />-->
-
-                        <TextBlock x:Name="warning" Grid.Column="2" Grid.Row="1"
-                                   Visibility="{Binding Timer.WarningVisiblity, UpdateSourceTrigger=PropertyChanged}"
-                           >
-                            <Canvas
-                                Width="31"
-                                Height="31"
-                                Margin="0,16">
-                                <Polygon
-                                    Fill="Yellow"
-                                    Points="15,0 30,30 0,30"
-                                    Stroke="Black"
-                                    StrokeThickness="2" />
-                                <TextBlock
-                                    Margin="11,0,0,0"
-                                    HorizontalAlignment="Right"
-                                    FontSize="24"
-                                    FontWeight="Bold"
-                                    Foreground="Black"
-                                    Text="!" />
-                            </Canvas>
-                        </TextBlock>
-
-
+                            Visibility="{Binding WarningVisiblity, UpdateSourceTrigger=PropertyChanged}" />
 
                         <TextBlock x:Name="info" Grid.Column="1" Grid.Row="3"
                             Margin="0,0,0,4"
                             HorizontalAlignment="Center"
                             FontSize="18"
                             FontWeight="SemiBold"
-                            Text="{Binding Timer.Info, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding Info, UpdateSourceTrigger=PropertyChanged}" />
 
                         <TextBlock x:Name="extraInfo" Grid.Column="1" Grid.Row="4"
                             Margin="0,0,0,4"
                             HorizontalAlignment="Center"
                             FontSize="18"
                             FontWeight="SemiBold"
-                            Text="{Binding Timer.MoreInfo, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding MoreInfo, UpdateSourceTrigger=PropertyChanged}" />
 
                         <TextBlock x:Name="group" Grid.Column="1" Grid.Row="5"
                             Margin="0,8,0,0"
                             HorizontalAlignment="Center"
                             FontWeight="Bold"
-                            Text="{Binding Timer.Group, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding Setting.Group, UpdateSourceTrigger=PropertyChanged}" />
                     </Grid>
                 </Border>
 
                 <!--  Timer Control Buttons  -->
-                <StackPanel
-                    HorizontalAlignment="Center"
-                    Orientation="Horizontal"
-                    Visibility="{Binding ButtonsVisibility}">
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                     <Button x:Name="btnSetting"
                         Margin="2,0,20,2"
                         Click="BtnSetting_Click"

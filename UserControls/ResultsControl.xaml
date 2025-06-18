@@ -1,0 +1,133 @@
+﻿<UserControl x:Class="DBF.UserControls.ResultsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DBF.UserControls"
+              xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <syncfusion:SfDataGrid Name="dgResult"
+                   Padding="5,0,5,0"
+                   AllowEditing="False"
+                   AllowResizingColumns="True"
+                   AllowTriStateSorting="False"
+                   AlternatingRowStyle="{StaticResource alternatingRowStyle}"
+                   AlternationCount="2"
+                   AutoExpandGroups="True"
+                   AutoGenerateColumns="False"
+                   CaptionSummaryRowStyle="{StaticResource captionRowStyle}"
+                   ColumnSizer="Auto"
+                   FilterRowPosition="None"
+                   FontSize="14"
+                   GroupCaptionTextFormat=" {Key} Rækken"
+                   ItemsSource="{Binding Pairs}"
+                   ScrollViewer.CanContentScroll="True">
+
+            <syncfusion:SfDataGrid.Columns>
+
+                <syncfusion:GridTextColumn
+                           HeaderText="Rk"
+                           IsHidden="True"
+                           MappingName="Group" />
+
+                <syncfusion:GridNumericColumn
+                           HeaderText="Nr"
+                           MappingName="PairNo"
+                           NumberDecimalDigits="0"
+                           TextAlignment="Center" />
+
+                <syncfusion:GridTextColumn
+                           Width="300"
+                           AllowSorting="False"
+                           HeaderText="Navne"
+                           MappingName="PairName" />
+
+                <syncfusion:GridNumericColumn
+                           HeaderText="HAC"
+                           HorizontalHeaderContentAlignment="Right"
+                           MappingName="AvgHAC"
+                           TextAlignment="Right" />
+
+                <!--  Placering  -->
+                <syncfusion:GridNumericColumn
+                           HeaderText="Sek"
+                           HorizontalHeaderContentAlignment="Center"
+                           MappingName="SectionRank"
+                           NumberDecimalDigits="0"
+                           TextAlignment="Center" />
+
+                <syncfusion:GridTextColumn
+                           HeaderText="HAC"
+                           HorizontalHeaderContentAlignment="Center"
+                           MappingName="HACRankSection"
+                           TextAlignment="Center" />
+
+                <!--  Sektionens Score  -->
+                <syncfusion:GridPercentColumn
+                           HeaderText="Opnået"
+                           HorizontalHeaderContentAlignment="Center"
+                           MappingName="ActualScore" />
+
+                <syncfusion:GridNumericColumn
+                           HeaderText="Score"
+                           HorizontalHeaderContentAlignment="Right"
+                           MappingName="Result"
+                           TextAlignment="Right" />
+
+                <syncfusion:GridNumericColumn
+                           HeaderText="HAC"
+                           HorizontalHeaderContentAlignment="Right"
+                           MappingName="DeltaHAC"
+                           TextAlignment="Right" />
+
+                <syncfusion:GridTextColumn
+                           Width="40"
+                           AllowSorting="False"
+                           HeaderText="MP"
+                           HorizontalHeaderContentAlignment="Center"
+                           MappingName="MP"
+                           TextAlignment="Center" />
+
+                <!--  Tourneringens Score  -->
+                <syncfusion:GridNumericColumn
+                           HeaderText="Rank."
+                           HorizontalHeaderContentAlignment="Center"
+                           MappingName="TournamentRank"
+                           NumberDecimalDigits="0"
+                           TextAlignment="Center" />
+
+                <syncfusion:GridNumericColumn
+                           HeaderText="Score"
+                           HorizontalHeaderContentAlignment="Right"
+                           MappingName="TournamentResult" />
+
+                <syncfusion:GridNumericColumn
+                           HeaderText="HAC"
+                           HorizontalHeaderContentAlignment="Right"
+                           MappingName="HACTotal" />
+            </syncfusion:SfDataGrid.Columns>
+
+            <syncfusion:SfDataGrid.StackedHeaderRows>
+                <syncfusion:StackedHeaderRow>
+                    <syncfusion:StackedHeaderRow.StackedColumns>
+                        <syncfusion:StackedColumn ChildColumns="SectionRank,HACRankSection" HeaderText="Rangering" />
+                        <syncfusion:StackedColumn ChildColumns="ExpectedScore,ActualScore" HeaderText=" %" />
+                        <syncfusion:StackedColumn ChildColumns="Result,DeltaHAC,MP" HeaderText="Resultat" />
+                        <syncfusion:StackedColumn ChildColumns="TournamentRank,TournamentResult,HACTotal" HeaderText="Turneringen" />
+                    </syncfusion:StackedHeaderRow.StackedColumns>
+                </syncfusion:StackedHeaderRow>
+            </syncfusion:SfDataGrid.StackedHeaderRows>
+
+            <syncfusion:SfDataGrid.SortColumnDescriptions>
+                <syncfusion:SortColumnDescription ColumnName="Group" SortDirection="Ascending" />
+                <syncfusion:SortColumnDescription ColumnName="TournamentRank" SortDirection="Ascending" />
+            </syncfusion:SfDataGrid.SortColumnDescriptions>
+
+            <syncfusion:SfDataGrid.GroupColumnDescriptions>
+                <syncfusion:GroupColumnDescription ColumnName="Group" />
+            </syncfusion:SfDataGrid.GroupColumnDescriptions>
+        </syncfusion:SfDataGrid>
+    </Grid>
+</UserControl>
