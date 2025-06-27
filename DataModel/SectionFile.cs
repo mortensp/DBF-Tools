@@ -6,7 +6,7 @@ namespace DBF.DataModel
     [XmlRoot(ElementName = "Section")]
     public class SectionFile : IEquatable<SectionFile>
     {
-        public int No => NoStr.AsInt();
+        public int No => NoStr.AsInt(1);
 
         //-----
         [XmlElement(ElementName = "FileName")] public string FileName { get; set; }

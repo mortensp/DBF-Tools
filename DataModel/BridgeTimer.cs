@@ -81,7 +81,7 @@ namespace DBF.DataModel
                         if (_remainingTime == TimeSpan.Zero)
                     if (!_isAtBreak && _round == BreakAfterRound)
                     {
-                        AudioPlayer.Play(Sound, Volume);                    // Break
+                        AudioPlayer.Play("Ding Ding", Volume);              // Break
                         _remainingTime = _breakTime;
                         _isAtTransition = false;
                         _isAtBreak = true;

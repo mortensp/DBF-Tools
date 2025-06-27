@@ -160,7 +160,7 @@ namespace DBF.ViewModels
                 {
                     if (Set(ref playingTime, value))
                     {
-                        ErrorMessage = "";
+                        ErrorMessage = "";                    
                         Pairs.Clear();
                         Teams.Clear();
                         FetchPlayingTime();
@@ -179,7 +179,7 @@ namespace DBF.ViewModels
                 }
             }
 
-            public bool                           HideTournamentSummery { get; set; } = false;
+            public bool HideTournamentSummery { get; set; } = false;
             public BindableCollection<Pair>       Pairs                 { get; set; } = [];
             public BindableCollection<Team>       Teams                 { get; set; } = [];
             public string                         ErrorMessage          { get; set; }
@@ -287,7 +287,10 @@ namespace DBF.ViewModels
                                 else
                                     res.StartPos = pair.StartPos;
                             }
-                    }
+
+                    if (Pairs.Count > 0)
+                        Pairs = new BindableCollection<Pair>(Pairs.OrderBy(p => p.SectionRank));
+                }
                     else
                     {
                         foreach (var team in grp.Rounds[0].Startlist.Teams)
@@ -478,10 +481,10 @@ namespace DBF.ViewModels
                         watcher.Filters.Add(path);
 
                         if (tournament is null)
-                            if (ErrorMessage is not null)
-                                ErrorMessage = $"Data for er ikke sendt til hjemmesiden";
-                            else
-                                ErrorMessage = $"Data for '{tournamentFile.GroupName}' er ikke sendt til hjemmesiden";
+                            if (string.IsNullOrEmpty(ErrorMessage))
+                            ErrorMessage = $"Data for '{tournamentFile.GroupName}' er ikke sendt til hjemmesiden";
+                        else
+                            ErrorMessage = $"Data er ikke sendt til hjemmesiden";                                                            
                         else
                         {
                             tournament.SectionNo = tournamentFile.Section?.SectionNo ?? 1;
@@ -607,7 +610,7 @@ namespace DBF.ViewModels
             {
                 var screens = WpfScreenHelper.Screen.AllScreens.ToList();
 
-                if (screens.Count == 0)
+                if (screens.Count < 2)
                     MessageBox.Show("Der er ikke oprettet forbindelse til en sekundær skærm. Tast Win+K", "Info");
                 else
                 {
@@ -627,7 +630,6 @@ namespace DBF.ViewModels
                     projectorView.Width                 = screenTwo.WorkingArea.Width;
                     projectorView.Height                = screenTwo.WorkingArea.Height;
                     projectorView.WindowState           = WindowState.Maximized;
-                    //projectorView.Activate();
                 }
 
                 // Flyt ShellView-aktivering herud, så den ALTID får fokus til sidst

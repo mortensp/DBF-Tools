@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
     d:DesignHeight="450"
+    x:Name="root"
     d:DesignWidth="800"
     mc:Ignorable="d">
 
@@ -68,8 +69,8 @@
                     MinimumWidth="350" />
 
                 <syncfusion:GridNumericColumn
-                    HeaderText="Hac"
                     Width="60"
+                    HeaderText="Hac"
                     HorizontalHeaderContentAlignment="Right"
                     MappingName="AvgHAC"
                     TextAlignment="Right" />
@@ -101,8 +102,8 @@
                     TextAlignment="Right" />
 
                 <syncfusion:GridNumericColumn
-                    HeaderText="Hac"
                     Width="60"
+                    HeaderText="Hac"
                     HorizontalHeaderContentAlignment="Right"
                     MappingName="DeltaHAC"
                     TextAlignment="Right" />
@@ -117,25 +118,26 @@
 
                 <!--  Tourneringens Score  -->
                 <syncfusion:GridNumericColumn
-                    HeaderText="Rang."
-                        IsHidden="{Binding HideTournamentSummery, UpdateSourceTrigger=PropertyChanged}"
+                    HeaderText="Rang." 
                     HorizontalHeaderContentAlignment="Center"
+                    IsHidden="{Binding DataContext.HideTournamentSummery, ElementName=root}"
+                    
                     MappingName="TournamentRank"
                     NumberDecimalDigits="0"
                     TextAlignment="Center" />
 
                 <syncfusion:GridNumericColumn
-                    HeaderText="Score"
                     Width="60"
-                        IsHidden="{Binding HideTournamentSummery, UpdateSourceTrigger=PropertyChanged}"
+                    HeaderText="Score"
                     HorizontalHeaderContentAlignment="Right"
+                   IsHidden="{Binding DataContext.HideTournamentSummery, ElementName=root}"
                     MappingName="TournamentResult" />
 
                 <syncfusion:GridNumericColumn
+                    Width="60"
                     HeaderText="Hac"
-                      Width="60"
-                        IsHidden="{Binding HideTournamentSummery, UpdateSourceTrigger=PropertyChanged}"
                     HorizontalHeaderContentAlignment="Right"
+                    IsHidden="{Binding DataContext.HideTournamentSummery, ElementName=root}"
                     MappingName="HACTotal" />
             </syncfusion:SfDataGrid.Columns>
 
@@ -143,7 +145,6 @@
                 <syncfusion:StackedHeaderRow>
                     <syncfusion:StackedHeaderRow.StackedColumns>
                         <syncfusion:StackedColumn ChildColumns="SectionRank,HACRankSection" HeaderText="Rangering" />
-                        <!--<syncfusion:StackedColumn ChildColumns="" HeaderText=" %" />-->
                         <syncfusion:StackedColumn ChildColumns="ExpectedScore,ActualScore,Result,DeltaHAC,MP" HeaderText="Resultat" />
                         <syncfusion:StackedColumn ChildColumns="TournamentRank,TournamentResult,HACTotal" HeaderText="Turneringen" />
                     </syncfusion:StackedHeaderRow.StackedColumns>
@@ -152,7 +153,7 @@
 
             <syncfusion:SfDataGrid.SortColumnDescriptions>
                 <syncfusion:SortColumnDescription ColumnName="Group" SortDirection="Ascending" />
-                <syncfusion:SortColumnDescription ColumnName="TournamentRank" SortDirection="Ascending" />
+                <syncfusion:SortColumnDescription ColumnName="SectionRank" SortDirection="Ascending" />
             </syncfusion:SfDataGrid.SortColumnDescriptions>
 
             <syncfusion:SfDataGrid.GroupColumnDescriptions>
@@ -196,7 +197,7 @@
                     HeaderText="Hold"
                     MappingName="TeamName"
                     MinimumWidth="350" />
-         
+
                 <!--  Kamp Resultat  -->
                 <syncfusion:GridTextColumn
                     Width="100"

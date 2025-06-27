@@ -66,7 +66,7 @@ namespace DBF.DataModel
                 if (name != value)
                 {
                     name = value?.ToString();
-                    NotifyOfPropertyChange(nameof(Name));
+                    //NotifyOfPropertyChange(nameof(Name));
                 }
             }
         }
@@ -79,7 +79,7 @@ namespace DBF.DataModel
                 if (customPreset != value)
                 {
                     customPreset = value;
-                    NotifyOfPropertyChange(nameof(customPreset));
+                    //NotifyOfPropertyChange(nameof(customPreset));
                 }
             }
         }

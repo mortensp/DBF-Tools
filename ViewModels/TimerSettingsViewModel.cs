@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Media;
 using Caliburn.Micro;
@@ -10,7 +11,7 @@ namespace DBF.ViewModels
 {
     public class TimerSettingViewModel : Screen
     {
-        private          Preset         selectedPreset;
+        private       Preset                            selectedPreset     { get; set; }
         private          TimerSetting   setting;
         private readonly IWindowManager _windowManager;
 
@@ -19,18 +20,18 @@ namespace DBF.ViewModels
             {
                 Configuration               = configuration;
                 _windowManager              = IoC.Get<IWindowManager>();
-                NewSetting.PropertyChanged += onSettingPropertyCahnged;
+                //NewSetting.PropertyChanged += onSettingPropertyChanged;
             }
         #endregion
 
         #region public Properties
             public static ObservableCollection<CustomColor> NewColorCollection { get; set; } = new()
-                        {
-                            new CustomColor { ColorName = "Rød", Color = (Color)ColorConverter.ConvertFromString("#F2460D")},
-                            new CustomColor { ColorName = "Blå", Color = (Color)ColorConverter.ConvertFromString("#00b0ff") },
-                            new CustomColor { ColorName = "range", Color = (Color)ColorConverter.ConvertFromString("#FF9D00")},
-                            new CustomColor { ColorName = "Grøn", Color = (Color)ColorConverter.ConvertFromString("#81C784")},
-                        };
+                                                {
+                                                    new CustomColor { ColorName = "Rød", Color = (Color)ColorConverter.ConvertFromString("#F2460D")},
+                                                    new CustomColor { ColorName = "Blå", Color = (Color)ColorConverter.ConvertFromString("#00b0ff") },
+                                                    new CustomColor { ColorName = "range", Color = (Color)ColorConverter.ConvertFromString("#FF9D00")},
+                                                    new CustomColor { ColorName = "Grøn", Color = (Color)ColorConverter.ConvertFromString("#81C784")},
+                                                };
 
             public        Configuration                     Configuration      { get; private set; }
             public        TimerSetting                      NewSetting         { get; set; } = new();
@@ -48,6 +49,8 @@ namespace DBF.ViewModels
                 }
             }
 
+            public bool CustomPreset => selectedPreset is not null && selectedPreset.CustomPreset == true;
+
             public TimerSetting Setting
             {
                 get => setting;
@@ -57,7 +60,7 @@ namespace DBF.ViewModels
                     NewSetting.Update(value);
 
                     selectedPreset = FindPreset(NewSetting);
-                    //    NotifyOfPropertyChange(nameof(SelectedPreset));
+                    NotifyOfPropertyChange(nameof(SelectedPreset));
                     //    NotifyOfPropertyChange(nameof(Setting));
                 }
             }
@@ -71,6 +74,18 @@ namespace DBF.ViewModels
 
             public async void AcceptSetting()
             {
+                if (selectedPreset is not null && !selectedPreset.Matches(NewSetting))
+                    if (selectedPreset.CustomPreset)
+                    {
+                        var result = MessageBox.Show("Vil du gemme dine ændringer i din forudstilling?", "Bekræftelse", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+
+                        if (result == MessageBoxResult.Cancel)
+                            return;
+
+                        if (result == MessageBoxResult.Yes)
+                            SavePreset();
+                    }
+
                 Setting.Update(NewSetting);
                 await TryCloseAsync();
                 Configuration.SaveSettings();
@@ -124,17 +139,22 @@ namespace DBF.ViewModels
         #endregion
 
         #region Private Methods
-            private void onSettingPropertyCahnged(object sender, PropertyChangedEventArgs e)
+            private void onSettingPropertyChanged(object sender, PropertyChangedEventArgs e)
             {
-                if (selectedPreset is not null
-                &&  sender         is Preset preset
-                && !preset.CustomPreset)
+                if (sender is Preset preset)
                 {
-                    if (!preset.Matches(selectedPreset))
-                    {
-                        SelectedPreset = null;
-                        preset.Name    = null;
-                    }
+                    if (selectedPreset is not null
+                    && preset.Matches(selectedPreset))
+                       return;
+                    
+                    preset.Name = null;
+                    var newPreset = FindPreset(preset);
+
+                if (newPreset is not null )
+                if (selectedPreset is null)
+                    SelectedPreset = newPreset;
+                else
+                    SelectedPreset.Name = newPreset?.Name;
                 }
             }
         #endregion

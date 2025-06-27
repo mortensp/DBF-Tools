@@ -162,7 +162,7 @@
                             Margin="4,5,0,5"
                             cal:Message.Attach="[Event Click] = [Action SavePreset]"
                             Content="💾"
-                            IsEnabled="{Binding SelectedPreset.CustomPreset}"
+                            IsEnabled="{Binding CustomPreset}"
                             ToolTip="Gem forudstilling" />
 
                         <Button
@@ -170,7 +170,7 @@
                             Margin="4,5,0,5"
                             cal:Message.Attach="[Event Click] = [Action DeletePreset]"
                             Content="🗑"
-                            IsEnabled="{Binding SelectedPreset.CustomPreset}"
+                            IsEnabled="{Binding CustomPreset}"
                             ToolTip="Slet forudindstilling" />
                     </StackPanel>
 

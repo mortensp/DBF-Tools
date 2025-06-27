@@ -7,7 +7,7 @@ namespace DBF.DataModel
     public class Tournament
     {
         public bool CalculateHAC => CalculateHACStr.AsBool();
-        public                                                      int               SectionNo              { get; set; }
+        public                                                      int               SectionNo              { get; set; } = 1;
 
         //-----
         [XmlElement(ElementName = "ClubId")]                 public string            ClubId                 { get; set; }
