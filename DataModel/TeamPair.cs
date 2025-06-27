@@ -9,10 +9,12 @@ namespace DBF.DataModel
         [XmlElement(ElementName = "EastPlayer")]  public TeamPlayer EastPlayer  { get; set; }
         [XmlElement(ElementName = "WestPlayer")]  public TeamPlayer WestPlayer  { get; set; }
 
+
+        //-----
         public override string ToString()
         {
             if (Players is null || Players.Count() == 0)
-                return string.Empty;
+                return "Oversidere"; // string.Empty;
 
             if (Players.Count() == 1)
                 return $"{PairNo,2} {Players[0].Name} - ?";

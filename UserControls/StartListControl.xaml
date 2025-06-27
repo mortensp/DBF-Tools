@@ -10,28 +10,28 @@
     d:DesignWidth="400"
     mc:Ignorable="d">
 
-    <!--<UserControl.Resources>
-        <DataTemplate x:Key="NamesViewTemplate">
-            <Grid
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                <Label
-                    Height="26"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Content="{Binding Data.Names}" />
-            </Grid>
-        </DataTemplate>
-    </UserControl.Resources>-->
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <syncfusion:SfDataGrid Name="dgStart" Grid.Row="0"
+
+        <Border Grid.Row="0"
+            Height="28"
+            Visibility="{Binding ErrorMessage, Converter={StaticResource HideEmptyConverter}}">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Background="Red"
+                FontSize="16"
+                FontWeight="Bold"
+                Foreground="White"
+                Text="{Binding ErrorMessage}" />
+        </Border>
+
+        <syncfusion:SfDataGrid Name="dgStartPairs" Grid.Row="1"
             Padding="5,0,5,0"
             AllowEditing="False"
             AllowResizingColumns="True"
@@ -61,10 +61,10 @@
                     TextAlignment="Center" />
 
                 <syncfusion:GridTextColumn
-                    Width="300"
                     AllowSorting="False"
                     HeaderText="Navne"
-                    MappingName="PairName" />
+                    MappingName="PairName"
+                    MinimumWidth="350" />
 
                 <syncfusion:GridTextColumn
                     HeaderText="Start"
@@ -85,16 +85,19 @@
                 <syncfusion:GridTextColumn
                     HeaderText="Rank."
                     HorizontalHeaderContentAlignment="Center"
+                     IsHidden="{Binding HideTournamentSummery, UpdateSourceTrigger=PropertyChanged}"
                     MappingName="TournamentRank"
                     TextAlignment="Center" />
 
                 <syncfusion:GridNumericColumn
                     HeaderText="Score"
+                        IsHidden="{Binding HideTournamentSummery, UpdateSourceTrigger=PropertyChanged}"
                     HorizontalHeaderContentAlignment="Right"
                     MappingName="TournamentResult" />
 
                 <syncfusion:GridNumericColumn
-                    HeaderText="HAC"
+                    HeaderText="Hac"
+                        IsHidden="{Binding HideTournamentSummery, UpdateSourceTrigger=PropertyChanged}"
                     HorizontalHeaderContentAlignment="Right"
                     MappingName="HACTotal" />
 
@@ -121,7 +124,7 @@
 
         </syncfusion:SfDataGrid>
 
-        <syncfusion:SfDataGrid Name="dgStartTeams" Grid.Row="1"
+        <syncfusion:SfDataGrid Name="dgStartTeams" Grid.Row="2"
             AllowEditing="False"
             AllowResizingColumns="True"
             AllowTriStateSorting="False"
@@ -169,7 +172,7 @@
 
                 <syncfusion:GridNumericColumn
                     Padding="5,0"
-                    HeaderText="HAC"
+                    HeaderText="Hac"
                     HorizontalHeaderContentAlignment="Right"
                     MappingName="AvgHAC" />
 

@@ -12,9 +12,9 @@
     xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
     WindowStartupLocation="Manual"
     mc:Ignorable="d">
-
-    <Viewbox Focusable="False" >
-        <ContentControl Content="{Binding CurrentView}" IsTabStop="False"/>
+    <Viewbox Focusable="False">
+        <ContentControl Grid.Row="1"
+            Content="{Binding CurrentView}"
+            IsTabStop="False" />
     </Viewbox>
-
 </Window>

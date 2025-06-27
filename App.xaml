@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:DBF"
     xmlns:models="clr-namespace:DBF.ViewModels"
-    xmlns:views="clr-namespace:DBF.Views;assembly=">
+    >
 
     <Application.Resources>
         <ResourceDictionary Source="Resources\ResourceDictionary.xaml">

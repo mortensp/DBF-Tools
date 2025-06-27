@@ -1,8 +1,10 @@
 ﻿//using Azure.Core.Pipeline;
 using System;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Media;
 using System.Xml.Serialization;
+//using DeepCopy;
 
 namespace DBF.DataModel
 {
@@ -10,62 +12,82 @@ namespace DBF.DataModel
     [XmlRoot(ElementName = "Pair")]
     public class Pair : IEquatable<Pair>
     {
-                                                         public   string       Group                { get; set; }
-        [XmlAttribute(AttributeName = "No")]             public   int          PairNo               { get; set; }
-        [XmlElement(ElementName = "PairTournamentRank")] public   int          PairTournamentRank   { get; set; }
-        [XmlElement(ElementName = "SectionRank")]        public   int          SectionRank          { get; set; }
-        [XmlElement(ElementName = "TournamentRank")]     public   int          TournamentRank       { get; set; }
-        [XmlElement(ElementName = "HACRankSection")]     public   int          HACRankSection       { get; set; }
-        [XmlElement(ElementName = "AvgHAC")]             public   decimal      AvgHAC               { get; set; }
-        [XmlElement(ElementName = "ExpectedScore")]      public   decimal      ExpectedScore        { get; set; }
-        [XmlElement(ElementName = "StartPos")]           public   string       StartPos             { get; set; }
-        [XmlElement(ElementName = "ActualScore")]        public   decimal      ActualScore          { get; set; }
-        [XmlElement(ElementName = "Result")]             public   decimal      Result               { get; set; }
-        [XmlAttribute(AttributeName = "Rank")]           public   int          Rank                 { get; set; }
-        [XmlElement(ElementName = "MP")]                 public   string       MP                   { get; set; }
-        [XmlElement(ElementName = "DeltaHAC")]           public   decimal      DeltaHAC             { get; set; }
-        [XmlElement(ElementName = "Player")]             public   List<Player> Players              { get; set; }
-        [XmlElement(ElementName = "TournamentScore")]    public   decimal      TournamentScore      { get; set; }
-        [XmlElement(ElementName = "TournamentResult")]   public   decimal      TournamentResult     { get; set; }
-        [XmlElement(ElementName = "HACTotal")]           public   decimal      HACTotal             { get; set; }
-        [XmlElement(ElementName = "HACRankTotal")]       public   int          HACRankTotal         { get; set; }
-        [XmlElement(ElementName = "Direction")]          public   string       Direction            { get; set; }
 
-        [XmlElement(ElementName = "Comment")]    public           string       Comment              { get; set; }
-        [XmlElement(ElementName = "TeamNumber")] public           string       TeamNumber           { get; set; }
-        [XmlElement(ElementName = "TeamName")]   public           string       TeamName             { get; set; }
+        //public Pair()
+        //{
+                
+        //}
 
-        [XmlElement(ElementName = "PairPoints")]           public string       PairPoints           { get; set; }
-        [XmlElement(ElementName = "PairPct")]              public string       PairPct              { get; set; }
-        [XmlElement(ElementName = "PairRank")]             public string       PairRank             { get; set; }
-        [XmlElement(ElementName = "PairTournamentPoints")] public string       PairTournamentPoints { get; set; }
-        [XmlElement(ElementName = "PairTournamentPct")]    public string       PairTournamentPct    { get; set; }
+        ////[DeepCopyConstructor]
+        //public Pair(Pair other)
+        //{
+        //    Group = other.Group;
+        //    PairNoStr = other.PairNoStr;
+        //    Players = new List<Player>(other.Players.Select(p => new Player(p)));
+        //}
 
-        //[XmlElement(ElementName = "NorthPlayer")]          public string       NorthPlayer          { get; set; }
-        //[XmlElement(ElementName = "SouthPlayer")]          public string       SouthPlayer          { get; set; }
-        //[XmlElement(ElementName = "EastPlayer")]           public string       EastPlayer           { get; set; }
-        //[XmlElement(ElementName = "WestPlayer")]           public string       WestPlayer           { get; set; }
-        [XmlAttribute(AttributeName = "Bye")] public              string       Bye                  { get; set; }
+        public int     PairNo             => PairNoStr.AsInt();
+        public int     PairTournamentRank => PairTournamentRankStr.AsInt();
+        public int     SectionRank        => SectionRankStr.AsInt();
+        public int     TournamentRank     => TournamentRankStr.AsInt();
+        public int     HACRankSection     => HACRankSectionStr.AsInt();
+        public decimal AvgHAC             => AvgHACStr.AsDecimal();
+        public decimal ExpectedScore      => ExpectedScoreStr.AsDecimal();
+        public decimal ActualScore        => ActualScoreStr.AsDecimal();
+        public decimal Result             => ResultStr.AsDecimal();
+        public int     Rank               => RankStr.AsInt();
+        public decimal DeltaHAC           => DeltaHACStr.AsDecimal();
+        public decimal TournamentScore    => TournamentScoreStr.AsDecimal();
+        public decimal TournamentResult   => TournamentResultStr.AsDecimal();
+        public decimal HACTotal           => HACTotalStr.AsDecimal();
+        public int     HACRankTotal       => HACRankTotalStr.AsInt();
+        public                                                    string       Group                 { get; set; }
 
-        // ---- 
-        [XmlElement(ElementName = "PairResultIMPs")]   public     string       PairResultIMPs       { get; set; }
-        [XmlElement(ElementName = "PairResultButler")] public     string       PairResultButler     { get; set; }
-        [XmlElement(ElementName = "HACDelta")]         public     string       HACDelta             { get; set; }
+        ///-----
+        [XmlAttribute(AttributeName = "No")]               public string       PairNoStr             { get; set; }
+        [XmlElement(ElementName = "PairTournamentRank")]   public string       PairTournamentRankStr { get; set; }
+        [XmlElement(ElementName = "SectionRank")]          public string       SectionRankStr        { get; set; }
+        [XmlElement(ElementName = "TournamentRank")]       public string       TournamentRankStr     { get; set; }
+        [XmlElement(ElementName = "HACRankSection")]       public string       HACRankSectionStr     { get; set; }
+        [XmlElement(ElementName = "AvgHAC")]               public string       AvgHACStr             { get; set; }
+        [XmlElement(ElementName = "ExpectedScore")]        public string       ExpectedScoreStr      { get; set; }
+        [XmlElement(ElementName = "StartPos")]             public string       StartPos              { get; set; }
+        [XmlElement(ElementName = "ActualScore")]          public string       ActualScoreStr        { get; set; }
+        [XmlElement(ElementName = "Result")]               public string       ResultStr             { get; set; }
+        [XmlAttribute(AttributeName = "Rank")]             public string       RankStr               { get; set; }
+        [XmlElement(ElementName = "MP")]                   public string       MP                    { get; set; }
+        [XmlElement(ElementName = "DeltaHAC")]             public string       DeltaHACStr           { get; set; }
+        [XmlElement(ElementName = "Player")]               public List<Player> Players               { get; set; }
+        [XmlElement(ElementName = "TournamentScore")]      public string       TournamentScoreStr    { get; set; }
+        [XmlElement(ElementName = "TournamentResult")]     public string       TournamentResultStr   { get; set; }
+        [XmlElement(ElementName = "HACTotal")]             public string       HACTotalStr           { get; set; }
+        [XmlElement(ElementName = "HACRankTotal")]         public string       HACRankTotalStr       { get; set; }
+        [XmlElement(ElementName = "Direction")]            public string       Direction             { get; set; }
+        [XmlElement(ElementName = "Comment")]              public string       Comment               { get; set; }
+        [XmlElement(ElementName = "TeamNumber")]           public string       TeamNumber            { get; set; }
+        [XmlElement(ElementName = "TeamName")]             public string       TeamName              { get; set; }
+        [XmlElement(ElementName = "PairPoints")]           public string       PairPoints            { get; set; }
+        [XmlElement(ElementName = "PairPct")]              public string       PairPct               { get; set; }
+        [XmlElement(ElementName = "PairRank")]             public string       PairRank              { get; set; }
+        [XmlElement(ElementName = "PairTournamentPoints")] public string       PairTournamentPoints  { get; set; }
+        [XmlElement(ElementName = "PairTournamentPct")]    public string       PairTournamentPct     { get; set; }
+        [XmlAttribute(AttributeName = "Bye")]              public string       Bye                   { get; set; }
+        [XmlElement(ElementName = "PairResultIMPs")]       public string       PairResultIMPs        { get; set; }
+        [XmlElement(ElementName = "PairResultButler")]     public string       PairResultButler      { get; set; }
+        [XmlElement(ElementName = "HACDelta")]             public string       HACDelta              { get; set; }
 
         // Håndtering af afvigende navne i XML
         [XmlAttribute(AttributeName = "Direction")]
-        public string Direction2
+        public string DirectionStr
         {
             set
             {
                 if (string.IsNullOrEmpty(Direction))
-                    Direction = value
-                    ; //todo: Empty Statement!! 
+                    Direction = value;
             }
         }
 
         // ---
-  
         public string PairName
         {
             get

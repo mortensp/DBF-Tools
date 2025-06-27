@@ -1,22 +1,40 @@
 ﻿using System;
 using System.Xml.Serialization;
+//using DeepCopy;
 
 namespace DBF.DataModel
 {
     [XmlRoot(ElementName = "Player")]
     public class Player : IEquatable<Player>
     {
-        [XmlElement(ElementName = "Name")]       public string  Name       { get; set; }
-        [XmlElement(ElementName = "MemberNo")]   public int     MemberNo   { get; set; }
-        [XmlElement(ElementName = "Substitute")] public int  Substitute { get; set; }
-        [XmlElement(ElementName = "HAC")]        public decimal HAC        { get; set; }
-        [XmlAttribute(AttributeName = "No")]     public int  No         { get; set; }
+        //public Player()
+        //{
+            
+        //}
 
+
+        ////[DeepCopyConstructor]
+        //public Player(Player other)
+        //{
+
+        //}
+        public int     MemberNo           => MemberNoStr.AsInt();
+        public int     Substitute         => SubstituteStr.AsInt();
+        public decimal HAC                => HACStr.AsDecimal();
+        public int     No                 => NoStr.AsInt();
+
+        //-----
+        [XmlElement(ElementName = "Name")]       public string Name          { get; set; }
+        [XmlElement(ElementName = "MemberNo")]   public string MemberNoStr   { get; set; }
+        [XmlElement(ElementName = "Substitute")] public string SubstituteStr { get; set; }
+        [XmlElement(ElementName = "HAC")]        public string HACStr        { get; set; }
+        [XmlAttribute(AttributeName = "No")]     public string NoStr         { get; set; }
+
+        //-----
         public override string ToString() => Name;
 
-        public string NameWithSubstitute => Substitute == 0 ? Name :  $"{Name} (S)";
-        public string NameWithHac => $"{Name} ({HAC})";
-
+        public string NameWithSubstitute  => Substitute == 0 ? Name : $"{Name} (S)";
+        public string NameWithHac         => $"{Name} ({HAC})";
 
         public override bool Equals(object obj)
         {

@@ -6,22 +6,12 @@ namespace DBF.DataModel
     [XmlRoot(ElementName = "Section")]
     public class Section
     {
-        [XmlElement(ElementName= "Test")] public string Test { get; set; }
-        [XmlAttribute(AttributeName = "Id")]      public string Id        { get; set; }
+        public                                             int    SectionNo    { get; set; }
 
-        [XmlAttribute(AttributeName = "SectionNo")] public int    SectionNo { get; set; }
-
-        // Håndtering af afvigende navne i XML
-        [XmlAttribute(AttributeName = "Section")]
-        public int SectionNo2
-        {
-            set
-            {
-                SectionNo = value;
-            }
-        }
-
-        //
-        //
+        //-----
+        [XmlElement(ElementName = "Test")]          public string Test         { get; set; }
+        [XmlAttribute(AttributeName = "Id")]        public string Id           { get; set; }
+        [XmlAttribute(AttributeName = "SectionNo")] public string SectionNoStr { private get => SectionNo.ToString(); set => SectionNo = value.AsInt(); }
+        [XmlAttribute(AttributeName = "Section")]   public string SectionNo2   { private get => SectionNo.ToString(); set => SectionNo = value.AsInt(); }         // Håndtering af afvigende navne i XML
     }
 }

@@ -12,5 +12,7 @@ namespace DBF.DataModel
     {
         [XmlAttribute(AttributeName = "Name")] public string     Name  { get; set; }
         [XmlElement("Club")]                   public List<Club> Clubs { get; set; }
+        [XmlIgnore]                            public int        No    { get; set; }
+        [XmlIgnore]                            public string     Path  { get; set; }
     }
 }

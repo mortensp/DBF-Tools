@@ -5,10 +5,14 @@ namespace DBF.DataModel
     [XmlRoot(ElementName = "Half")]
     public class Half : IEquatable<Half>
     {
-        [XmlAttribute(AttributeName = "No")] public int            No     { get; set; }
+        public int No => NoStr.AsInt();
+
+        //-----
+        [XmlAttribute(AttributeName = "No")] public string         NoStr  { get; set; }
         [XmlElement(ElementName = "Table")]  public List<Table>    Tables { get; set; }
         [XmlElement(ElementName = "Pair")]   public List<TeamPair> Pairs  { get; set; }
 
+        //-----
         public override bool Equals(object obj)
         {
             if (obj is Half other)
@@ -18,8 +22,8 @@ namespace DBF.DataModel
         }
 
         public bool Equals(Half other)
-        {            
-                return No == other.No;
+        {
+            return No == other.No;
         }
 
         public override int GetHashCode()

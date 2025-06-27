@@ -8,6 +8,4 @@ namespace DBF.DataModel
         [XmlElement(ElementName = "Team")]
         public List<Team> Teams { get; set; }
     }
-
-   
 }

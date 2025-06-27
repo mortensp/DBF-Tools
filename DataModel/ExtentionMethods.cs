@@ -1,23 +1,22 @@
-﻿using Syncfusion.UI.Xaml.Schedule;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Syncfusion.UI.Xaml.Schedule;
 
-namespace DBF
+namespace DBF.DataModel
 {
-    public static class DBFMath
-    {
-        static public TimeSpan Max( TimeSpan t1, TimeSpan t2) => t1 > t2 ? t1 : t2;
-        static public TimeSpan Min( TimeSpan t1, TimeSpan t2) => t1 < t2 ? t1 : t2;
-         
-    }
 
     public static class ExtentionMethods
     {
+        public static double AsDouble(this string str) => double.TryParse(str, CultureInfo.InvariantCulture, out double val) ? val : 0;
+        public static decimal AsDecimal(this string str) => decimal.TryParse(str, CultureInfo.InvariantCulture, out decimal val) ? val : 0;
+        public static int AsInt(this string str) => int.TryParse(str, out int val) ? val : 0;
+        public static bool AsBool(this string str) => bool.TryParse(str, out bool val) ? val : false;
         static public TimeSpan Max(this TimeSpan t1, TimeSpan t2) => t1 > t2 ? t1 : t2;
         static public TimeSpan Min(this TimeSpan t1, TimeSpan t2) => t1 < t2 ? t1 : t2;
 

@@ -5,11 +5,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:cal="http://www.caliburnproject.org"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:DBF"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="clr-namespace:DBF.ViewModels"
-    xmlns:views="clr-namespace:DBF.Views;assembly="
+    Width="1100"
+    Height="900"
     FontSize="14"
+    WindowStartupLocation="CenterScreen"
     WindowState="Normal"
     mc:Ignorable="d">
     <Grid>

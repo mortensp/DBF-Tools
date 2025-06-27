@@ -71,7 +71,7 @@
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="150" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
@@ -218,7 +218,7 @@
                         Width="50"
                         Margin="0,5"
                         HorizontalAlignment="Left"
-                        Text="{Binding BreakAfter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding BreakAfterRound, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     <!--  Tid pr runde:  -->
                     <TextBlock Grid.Column="0" Grid.Row="7"
@@ -249,17 +249,34 @@
                             Text="(tt:mm:ss)" />
                     </StackPanel>
 
-
-                    <!--  Tid til rundeskifte:  -->
+                    <!--  Advarsel om ikke at starte på nye spil  -->
                     <TextBlock Grid.Column="0" Grid.Row="8"
                         Margin="0,5"
                         VerticalAlignment="Center"
-                        Text="Tid til rundeskifte:" />
+                        Text="Advarsel - start ike nye spil:" />
 
                     <StackPanel Grid.Column="1" Grid.Row="8"
                         Margin="0,5"
                         Orientation="Horizontal">
-                        <TextBox Width="50" Text="{Binding TransitionTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Width="50" Text="{Binding WarningMinutes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock
+                            Margin="4,0,0,0"
+                            VerticalAlignment="top"
+                            Text="(minutter)" />
+                    </StackPanel>
+
+
+                    <!--  Tid til rundeskifte:  -->
+                    <TextBlock Grid.Column="0" Grid.Row="9"
+                        Margin="0,5"
+                        VerticalAlignment="Center"
+                        Text="Tid til rundeskifte:" />
+
+
+                    <StackPanel Grid.Column="1" Grid.Row="9"
+                        Margin="0,5"
+                        Orientation="Horizontal">
+                        <TextBox Width="50" Text="{Binding TransitionMinutes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <TextBlock
                             Margin="4,0,0,0"
                             VerticalAlignment="top"
@@ -267,18 +284,18 @@
                     </StackPanel>
 
                     <!--  Pausens længde:  -->
-                    <TextBlock Grid.Column="0" Grid.Row="9"
+                    <TextBlock Grid.Column="0" Grid.Row="10"
                         Margin="0,5"
                         VerticalAlignment="Center"
                         Text="Pausens længde:" />
 
-                    <StackPanel Grid.Column="1" Grid.Row="9"
+                    <StackPanel Grid.Column="1" Grid.Row="10"
                         Orientation="Horizontal">
 
                         <TextBox
                             Width="50"
                             Margin="0,5"
-                            Text="{Binding BreakTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding BreakMinutes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                         <TextBlock
                             Margin="4,0,0,0"

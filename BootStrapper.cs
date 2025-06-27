@@ -2,14 +2,17 @@
 using System.Data;
 using System.Globalization;
 using System.Reflection;
+using System.Text;
 using System.Windows;
 using System.Windows.Markup;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Caliburn.Micro;
 using DBF.DataModel;
 using DBF.ViewModels;
 using DBF.Views;
 using Microsoft.DotNet.DesignTools.ViewModels;
+using Wpf_TaskBar_Icon;
 
 namespace DBF
 {
@@ -20,11 +23,13 @@ namespace DBF
 
         public Bootstrapper()
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
             FrameworkElement.LanguageProperty
                             .OverrideMetadata( typeof(FrameworkElement)
                                              , new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
 
-            //Thread.CurrentThread.CurrentCulture = Global.DkCulture;
+           // Thread.CurrentThread.CurrentCulture = Global.DkCulture;
             //setupLogging();
             Initialize();
         }
@@ -36,15 +41,18 @@ namespace DBF
         //}
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
-            DisplayRootViewForAsync<ShellViewModel>();
-
             // Show screen at startup
+            DisplayRootViewForAsync<ShellViewModel>();
             var screen = IoC.Get<ShellViewModel>();
+            var view = screen.GetView() as ShellView;
             screen.OpenControlView();
+
+            // Restore Taskbar Icon.
+            Application.MainWindow.Icon = BitmapFrame.Create(new Uri("pack://application:,,,/Images/DBF_Tools.ico", UriKind.Absolute));
         }
 
         #region SimpleContainer Overrides and Configuration.
-            private readonly SimpleContainer _container = new();
+        private readonly SimpleContainer _container = new();
 
             protected override void Configure()
             {

@@ -4,11 +4,10 @@ VisualStudioVersion = 17.13.36105.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBF", "DBF.csproj", "{47BF2200-16DD-39BE-06F2-2DCEDC8AC6EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caliburn.Micro.Core", "..\Common Libs\Caliburn.Micro4\src\Caliburn.Micro.Core\Caliburn.Micro.Core.csproj", "{020DBE89-214A-0989-30E6-2C5A6E5E9C3E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caliburn.Micro.Platform", "..\Common Libs\Caliburn.Micro4\src\Caliburn.Micro.Platform\Caliburn.Micro.Platform.csproj", "{A09305AF-CE96-B17D-FD8B-81FC2217FD63}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caliburn.Micro.Platform.Core", "..\Common Libs\Caliburn.Micro4\src\Caliburn.Micro.Platform.Core\Caliburn.Micro.Platform.Core.csproj", "{EE867254-C76E-15E8-8B93-99F2D6705ED9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{089100B1-113F-4E66-888A-E83F3999EAFD}"
+	ProjectSection(SolutionItems) = preProject
+		..\Bridge\DBFTools Install script.iss = ..\Bridge\DBFTools Install script.iss
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,30 +25,6 @@ Global
 		{47BF2200-16DD-39BE-06F2-2DCEDC8AC6EE}.Profile|Any CPU.Build.0 = Profile|Any CPU
 		{47BF2200-16DD-39BE-06F2-2DCEDC8AC6EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47BF2200-16DD-39BE-06F2-2DCEDC8AC6EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{020DBE89-214A-0989-30E6-2C5A6E5E9C3E}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{020DBE89-214A-0989-30E6-2C5A6E5E9C3E}.Debug|Any CPU.Build.0 = Debug|x64
-		{020DBE89-214A-0989-30E6-2C5A6E5E9C3E}.ProdTest|Any CPU.ActiveCfg = Release|x64
-		{020DBE89-214A-0989-30E6-2C5A6E5E9C3E}.ProdTest|Any CPU.Build.0 = Release|x64
-		{020DBE89-214A-0989-30E6-2C5A6E5E9C3E}.Profile|Any CPU.ActiveCfg = Release|x64
-		{020DBE89-214A-0989-30E6-2C5A6E5E9C3E}.Profile|Any CPU.Build.0 = Release|x64
-		{020DBE89-214A-0989-30E6-2C5A6E5E9C3E}.Release|Any CPU.ActiveCfg = Release|x64
-		{020DBE89-214A-0989-30E6-2C5A6E5E9C3E}.Release|Any CPU.Build.0 = Release|x64
-		{A09305AF-CE96-B17D-FD8B-81FC2217FD63}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{A09305AF-CE96-B17D-FD8B-81FC2217FD63}.Debug|Any CPU.Build.0 = Debug|x64
-		{A09305AF-CE96-B17D-FD8B-81FC2217FD63}.ProdTest|Any CPU.ActiveCfg = Release|x64
-		{A09305AF-CE96-B17D-FD8B-81FC2217FD63}.ProdTest|Any CPU.Build.0 = Release|x64
-		{A09305AF-CE96-B17D-FD8B-81FC2217FD63}.Profile|Any CPU.ActiveCfg = Release|x64
-		{A09305AF-CE96-B17D-FD8B-81FC2217FD63}.Profile|Any CPU.Build.0 = Release|x64
-		{A09305AF-CE96-B17D-FD8B-81FC2217FD63}.Release|Any CPU.ActiveCfg = Release|x64
-		{A09305AF-CE96-B17D-FD8B-81FC2217FD63}.Release|Any CPU.Build.0 = Release|x64
-		{EE867254-C76E-15E8-8B93-99F2D6705ED9}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{EE867254-C76E-15E8-8B93-99F2D6705ED9}.Debug|Any CPU.Build.0 = Debug|x64
-		{EE867254-C76E-15E8-8B93-99F2D6705ED9}.ProdTest|Any CPU.ActiveCfg = ProdTest|x64
-		{EE867254-C76E-15E8-8B93-99F2D6705ED9}.ProdTest|Any CPU.Build.0 = ProdTest|x64
-		{EE867254-C76E-15E8-8B93-99F2D6705ED9}.Profile|Any CPU.ActiveCfg = Profile|x64
-		{EE867254-C76E-15E8-8B93-99F2D6705ED9}.Profile|Any CPU.Build.0 = Profile|x64
-		{EE867254-C76E-15E8-8B93-99F2D6705ED9}.Release|Any CPU.ActiveCfg = Release|x64
-		{EE867254-C76E-15E8-8B93-99F2D6705ED9}.Release|Any CPU.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

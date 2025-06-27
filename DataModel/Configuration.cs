@@ -51,6 +51,7 @@ namespace DBF.DataModel
                 if (!Directory.Exists(configDir))
                     Directory.CreateDirectory(configDir);
 
+                // Store builtIn defaults
                 if (!File.Exists(presetsPath))
                 {
                     string json = JsonSerializer.Serialize( Presets.Where(p => p.CustomPreset == true).ToObservableCollection<Preset>()
@@ -64,7 +65,6 @@ namespace DBF.DataModel
                     File.WriteAllText(timerSettingPath, json);
                 }
 
-                //TimerSettings.CollectionChanged += TimerSettings_CollectionChanged;
                 Load();
             }
         #endregion
@@ -76,12 +76,12 @@ namespace DBF.DataModel
             public ObservableCollection<BridgeTimer> BridgeTimers     { get; set; } = new();
 
             public BindableCollection<Preset>        Presets          { get; set; } = new()
-                                                                {
-                                                                        new Preset("Par - 7 runder af 4 spil", false, false,  7, 4, 4, 0,27, 0, 1, 12),
-                                                                        new Preset("Par - 9 runder af 3 spil", false, false,  9, 3,  5,0, 20, 0, 1, 12),
-                                                                        new Preset("Par - 11 runder af 2 spil",false, false, 11, 2,  6,0,13, 0, 1, 12),
-                                                                        new Preset("Hold kamp af 32 spil",     false, true,   2, 16, 1,1,28, 0, 0,15)
-                                                                };
+                                                                    {
+                                                                            new Preset("Par - 7 runder af 4 spil", false, false,  7, 4, 4, 0,27, 0, 1, 12,5),
+                                                                            new Preset("Par - 9 runder af 3 spil", false, false,  9, 3,  5,0, 20, 0, 1, 12,5),
+                                                                            new Preset("Par - 11 runder af 2 spil",false, false, 11, 2,  6,0,13, 0, 1, 12,5),
+                                                                            new Preset("Hold kamp af 32 spil",     false, true,   2, 16, 1,1,28, 0, 0,15,5)
+                                                                    };
 
             public bool                              TimersCanClose   { get; set; }
             public bool                              TimersCanBeAdded { get; set; }
@@ -118,8 +118,7 @@ namespace DBF.DataModel
                             timer.Update(Presets[i]);
                             timer.Name  = null;
                             timer.Color = BackgroundColors[i].Color;
-                            //timer.Background = new SolidColorBrush(setting.Color ?? Colors.White);
-                    timer.Group = ((char)('A' + i)).ToString(); // Set group to A, B, C or D
+                            timer.Group = ((char)('A' + i)).ToString(); // Set group to A, B, C or D
                         }
                         else
                             if (loadedTimers.Count >  i)
@@ -134,8 +133,7 @@ namespace DBF.DataModel
                         if (string.IsNullOrEmpty(timer.Sound))
                             timer.Sound = AudioPlayer.Sounds[i];
 
-                //TimerSettings.Add(timer);
-                timer.UpdateDisplay();
+                        timer.UpdateDisplay();
                         BridgeTimers.Add(timer);
 
                         if (timer.Visibility == Visibility.Visible)
@@ -152,14 +150,13 @@ namespace DBF.DataModel
                         timer.Visibility = Visibility.Collapsed;
                         timer.Sound      = AudioPlayer.Sounds[i];
 
-                        //TimerSettings.Add(timer);
                         BridgeTimers.Add(timer);
 
                         if (timer.Visibility == Visibility.Visible)
                             VisibleTimerCount++;
                     }
 
-                    for (i= BridgeTimers.Count-1; i >=0  ; i--)
+                    for (i = BridgeTimers.Count - 1; i >= 0; i--)
                     {
                         var timer = BridgeTimers[i];
 

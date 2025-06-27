@@ -18,12 +18,13 @@ namespace DBF.DataModel
                            , bool teamMatch = false
                            , int rounds = 0
                            , int boardsPerRound = 0
-                           , int breakAfter = 0
+                           , int breakAfterRound = 0
                            , int hours = 0
                            , int minutes = 0
                            , int seconds = 0
-                           , int transitionTime = 0
-                           , int breakTime = 0
+                           , int transitionMinutes = 0
+                           , int breakMinutes = 0
+                           ,int warningMinutes = 0
                            //
                            , string group = ""
                            , string info = ""
@@ -31,7 +32,7 @@ namespace DBF.DataModel
                            , string sound = null
                            , int volume = 50
                            , Visibility visibility = Visibility.Visible
-                           ) : base(name, customPreset, teamMatch, rounds, boardsPerRound, breakAfter, hours, minutes, seconds, transitionTime, breakTime)
+                           ) : base(name, customPreset, teamMatch, rounds, boardsPerRound, breakAfterRound, hours, minutes, seconds, transitionMinutes, breakMinutes,warningMinutes)
         {
             Group      = group;
             Info       = info;
@@ -54,13 +55,13 @@ namespace DBF.DataModel
             }
         }
 
-                     public string     Group       { get; set; }
-                     public string     Info        { get; set; }
-        [JsonIgnore] public Brush      Background  { get; set; }
-                     public string     Sound       { get; set; }
-                     public int        Volume      { get; set; }
-                     public Visibility Visibility  { get; set; }
-        [JsonIgnore] public TimeSpan   WarningTime { get; set; }
+                     public string     Group          { get; set; }
+                     public string     Info           { get; set; }
+        [JsonIgnore] public Brush      Background     { get; set; }
+                     public string     Sound          { get; set; }
+                     public int        Volume         { get; set; }
+                     public Visibility Visibility     { get; set; }
+                     
 
         public new void Update(Preset preset)
         {
@@ -69,12 +70,13 @@ namespace DBF.DataModel
             TeamMatch         = preset.TeamMatch;
             Rounds            = preset.Rounds;
             BoardsPerRound    = preset.BoardsPerRound;
-            BreakAfter        = preset.BreakAfter;
+            BreakAfterRound   = preset.BreakAfterRound;
             Hours             = preset.Hours;
             Minutes           = preset.Minutes;
             Seconds           = preset.Seconds;
             TransitionMinutes = preset.TransitionMinutes;
             BreakMinutes      = preset.BreakMinutes;
+            WarningMinutes    = preset.WarningMinutes;
 
             if (preset is TimerSetting tSetting)
             {
@@ -85,8 +87,6 @@ namespace DBF.DataModel
                 Color      = tSetting.Color;
                 Visibility = tSetting.Visibility;
             }
-
-            WarningTime = new TimeSpan(0, 5 - TransitionMinutes, 0);
         }
     }
 }

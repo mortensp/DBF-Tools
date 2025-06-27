@@ -9,7 +9,6 @@ using System.Windows;
 using System.Windows.Data;
 using System;
 
-
 namespace DBF.Converters
 {
     public class EmptyCollectionToVisibilityConverter : IValueConverter
@@ -23,16 +22,13 @@ namespace DBF.Converters
             if (value is IEnumerable enumerable)
             {
                 var enumerator = enumerable.GetEnumerator();
-                isEmpty = !enumerator.MoveNext();
-            }
-            else if (value == null)
-            {
-                isEmpty = true;
+                isEmpty        = !enumerator.MoveNext();
             }
             else
-            {
-                isEmpty = false;
-            }
+if (value == null)
+   isEmpty = true;
+else
+   isEmpty = false;
 
             if (Invert)
                 isEmpty = !isEmpty;

@@ -10,8 +10,9 @@ namespace DBF.DataModel
         [XmlAttribute(AttributeName = "Id")]      public string            Id          { get; set; }
         [XmlElement(ElementName = "Description")] public string            Description { get; set; }
         [XmlElement(ElementName = "Form")]        public Form              Form        { get; set; }
-        [XmlElement("PlayingTime")]               public List<PlayingTime> PlayingTimes { get; set; }
+        [XmlElement("PlayingTime")]               public List<PlayingTime> PlayingTime { get; set; }
 
+        //-----
         public override bool Equals(object obj)
         {
             if (obj is MainTournament other)

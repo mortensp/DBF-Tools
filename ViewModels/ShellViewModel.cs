@@ -7,17 +7,13 @@ namespace DBF.ViewModels
     {
         public ShellViewModel()
         {
-            //var db = new DBFContext();
-      
         }
 
         #region Show Screens
         public async void OpenControlView()        
         {
-            var screen = IoC.Get<ControlViewModel>();
-
-            await ActivateItemAsync(screen);
-            //await screen.ShowProjector();
+            var screen = IoC.Get<ControlViewModel>();            
+            await ActivateItemAsync(screen);            
         }
         #endregion
     }

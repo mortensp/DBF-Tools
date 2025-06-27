@@ -13,17 +13,19 @@ namespace DBF.DataModel
     [XmlRoot(ElementName = "GroupTournament")]
     public class GroupTournament : IEquatable<GroupTournament>
     {
-        [XmlElement(ElementName = "TournamentType")]     public string  TournamentType     { get; set; }
-        [XmlElement(ElementName = "Description")]        public string  Description        { get; set; }
-        [XmlElement(ElementName = "Section")]            public Section Section            { get; set; }
- 
-        [XmlElement(ElementName = "LastCompletedRound")] public int     LastCompletedRound { get; set; }
-        [XmlElement(ElementName = "SectionCompleted")]   public string  SectionCompleted   { get; set; }
-        [XmlElement(ElementName = "Filename")]           public string  Filename           { get; set; }
-        [XmlAttribute(AttributeName = "Id")]             public string  Id                 { get; set; }
-        [XmlAttribute(AttributeName = "GroupName")]      public string  GroupName          { get; set; }
+        public int LastCompletedRound => LastCompletedRoundStr.AsInt();
 
-   
+        //-----
+        [XmlElement(ElementName = "TournamentType")]     public string  TournamentType        { get; set; }
+        [XmlElement(ElementName = "Description")]        public string  Description           { get; set; }
+        [XmlElement(ElementName = "Section")]            public Section Section               { get; set; }
+        [XmlElement(ElementName = "LastCompletedRound")] public string  LastCompletedRoundStr { get; set; }
+        [XmlElement(ElementName = "SectionCompleted")]   public string  SectionCompleted      { get; set; }
+        [XmlElement(ElementName = "Filename")]           public string  FileName              { get; set; }
+        [XmlAttribute(AttributeName = "Id")]             public string  Id                    { get; set; }
+        [XmlAttribute(AttributeName = "GroupName")]      public string  GroupName             { get; set; }
+
+        //-----
         public override bool Equals(object obj)
         {
             if (obj is GroupTournament other)
@@ -42,5 +44,7 @@ namespace DBF.DataModel
             // Brug de samme properties som i Equals
             return HashCode.Combine(Id);
         }
+
+        public override string ToString() => $"{FileName}: {GroupName}";
     }
 }

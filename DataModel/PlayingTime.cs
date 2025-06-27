@@ -6,13 +6,14 @@ namespace DBF.DataModel
     [XmlRoot(ElementName = "PlayingTime")]
     public class PlayingTime : IEquatable<PlayingTime>
     {
-        [XmlAttribute(AttributeName = "Date")] public string Date { get; set; }
-        [XmlElement("GroupTournament")] public List<GroupTournament> TournamentFiles { get; set; }
+        [XmlAttribute(AttributeName = "Date")] public string                Date            { get; set; }
+        [XmlElement("GroupTournament")]        public List<GroupTournament> TournamentFiles { get; set; }
 
-        public DateTime Dato => DateTime.Parse(Date);
+        //-----
+        public DateTime Dato              => DateTime.Parse(Date);
 
-        public override string ToString() => string.IsNullOrEmpty(Date) ? null:Dato.ToShortDateString()+" "+Dato.ToShortTimeString();
-
+        //-----
+        public override string ToString() => string.IsNullOrEmpty(Date) ? null : Dato.ToShortDateString() + " " + Dato.ToShortTimeString();
 
         public override bool Equals(object obj)
         {

@@ -12,6 +12,7 @@ namespace DBF.DataModel
         [XmlAttribute(AttributeName = "GameTime")] public string               GameTime       { get; set; }
         [XmlElement("MainTournament")]             public List<MainTournament> MainTournaments { get; set; }
 
+        //-----
         public override string ToString() => Name;
 
         public override bool Equals(object obj)
@@ -33,4 +34,5 @@ namespace DBF.DataModel
             return HashCode.Combine(Id);
         }
     }
+
 }

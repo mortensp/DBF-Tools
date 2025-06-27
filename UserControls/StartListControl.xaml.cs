@@ -24,6 +24,7 @@ namespace DBF.UserControls
         public StartListControl()
         {
             InitializeComponent();
+            dgStartPairs.Columns["PairName"].ColumnSizer = GridLengthUnitType.SizeToCells;
             dgStartTeams.Columns["Names"].ColumnSizer = GridLengthUnitType.SizeToCells;
 
 
