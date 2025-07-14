@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace DBF.BridgeMateModel
 {
+    /// <summary>
+    /// Hvem møder hvem ved hvilket bord og med hvilke spil
+    /// </summary>
     public partial class RoundDatum
     {
         public short? Section { get; set; }
@@ -12,6 +15,6 @@ namespace DBF.BridgeMateModel
         public short? Ewpair { get; set; }
         public short? LowBoard { get; set; }
         public short? HighBoard { get; set; }
-        public string? CustomBoards { get; set; }
+        public string  CustomBoards { get; set; }
     }
 }

@@ -3,15 +3,14 @@ using System.Xml.Serialization;
 
 namespace DBF.DataModel
 {
-    [XmlRoot(ElementName = "Team")]
-    public class Team : IEquatable<Team>
+    [XmlRoot(ElementName = "Team")]     public class Team : IEquatable<Team>
     {
         public double  AvgHAC         => AvgHACStr.AsDouble();
         public int     TeamNo         => TeamNoStr.AsInt();
         public int     ImpScore       => ImpScoreStr.AsInt();
         public double? KP             => KPStr is null ? null : KPStr.AsDouble();
         public int     OpponentTeamNo => OpponentTeamNoStr.AsInt();
-        public                                                  string       Group              { get; set; }
+        public                                                  string       Title              { get; set; }
         public                                                  double       TotalKP            { get; set; }
         public                                                  int          TournamentRank     { get; set; }
 
@@ -25,7 +24,7 @@ namespace DBF.DataModel
         [XmlElement(ElementName = "ImpAdjustment")]      public string       ImpAdjustment      { get; set; }
         [XmlElement(ElementName = "MatchPointScore")]    public string       MatchPointScore    { get; set; }
         [XmlElement(ElementName = "PenaltyScore")]       public string       PenaltyScore       { get; set; }
-        [XmlElement(ElementName = "EndScore")]           public string?      KPStr              { get; set; }
+        [XmlElement(ElementName = "EndScore")]           public string       KPStr              { get; set; }
         [XmlElement(ElementName = "OpponentTeamNo")]     public string       OpponentTeamNoStr  { get; set; }
         [XmlElement(ElementName = "Half")]               public List<Half>   Halfs              { get; set; }
         [XmlElement(ElementName = "Tiebreak")]           public string       Tiebreak           { get; set; }
@@ -33,8 +32,7 @@ namespace DBF.DataModel
         [XmlElement(ElementName = "TournamentTiebreak")] public string       TournamentTiebreak { get; set; }
 
         // Håndtering af afvigende navne i XML
-        [XmlElement(ElementName = "TeamName")]
-        public string TeamName2
+        [XmlElement(ElementName = "TeamName")]         public string TeamName2
         {
             set
             {

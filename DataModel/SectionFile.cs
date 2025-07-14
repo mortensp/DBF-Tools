@@ -3,8 +3,7 @@ using System.Xml.Serialization;
 
 namespace DBF.DataModel
 {
-    [XmlRoot(ElementName = "Section")]
-    public class SectionFile : IEquatable<SectionFile>
+    [XmlRoot(ElementName = "Section")]     public class SectionFile : IEquatable<SectionFile>
     {
         public int No => NoStr.AsInt(1);
 

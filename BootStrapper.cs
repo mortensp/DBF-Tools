@@ -19,9 +19,7 @@ namespace DBF
     //[TraceOn()]
     public class Bootstrapper : BootstrapperBase
     {
-     
-
-        public Bootstrapper()
+             public Bootstrapper()
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
@@ -29,13 +27,12 @@ namespace DBF
                             .OverrideMetadata( typeof(FrameworkElement)
                                              , new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
 
-           // Thread.CurrentThread.CurrentCulture = Global.DkCulture;
+            Thread.CurrentThread.CurrentCulture = Global.DkCulture;
             //setupLogging();
             Initialize();
         }
 
-        //[Conditional("DEBUG")]
-        //private static void setupLogging()
+        //[Conditional("DEBUG")]         //private static void setupLogging()
         //{
         //    Console.SetOut(new ToDebugWriter());
         //}

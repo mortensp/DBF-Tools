@@ -7,8 +7,7 @@ using System.Xml.Serialization;
 
 namespace DBF.DataModel
 {
-    [XmlRoot(ElementName = "MainClub")]
-    public class MainClub
+    [XmlRoot(ElementName = "MainClub")]     public class MainClub
     {
         [XmlAttribute(AttributeName = "Name")] public string     Name  { get; set; }
         [XmlElement("Club")]                   public List<Club> Clubs { get; set; }

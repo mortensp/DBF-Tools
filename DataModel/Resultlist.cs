@@ -2,8 +2,7 @@
 
 namespace DBF.DataModel
 {
-    [XmlRoot(ElementName = "Resultlist")]
-    public class Resultlist
+    [XmlRoot(ElementName = "Resultlist")]     public class Resultlist
     {
         public decimal ScoreTransferred => ScoreTransferredStr.AsDecimal();
         public decimal ScoreRegulated   => ScoreRegulatedStr.AsDecimal();

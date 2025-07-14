@@ -6,8 +6,13 @@
     xmlns:sfgrid="clr-namespace:Syncfusion.UI.Xaml.Grid;assembly=Syncfusion.SfGrid.WPF"
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
     <conv:EmptyCollectionToVisibilityConverter x:Key="EmptyCollectionToVisibilityConverter" />
     <conv:HideEmptyConverter x:Key="HideEmptyConverter" />
+    <conv:FirstPartConverter x:Key="FirstPartConverter" />
+    <conv:SecondPartConverter x:Key="SecondPartConverter" />
+    <conv:ThirdPartConverter x:Key="ThirdPartConverter" />
+    <conv:GroupColorConverter x:Key="GroupColorConverter" />
 
 
     <LinearGradientBrush x:Key="HeaderBrush" StartPoint="0.5,0" EndPoint="0.5,1">
@@ -130,8 +135,30 @@
     </Style>
 
 
-    <Style x:Key="captionRowStyle" TargetType="sfgrid:VirtualizingCellsControl">
+    <Style x:Key="captionRowStyle" TargetType="sfgrid:CaptionSummaryRowControl">
         <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Margin" Value="0,5,0,0"/>
+        <!--<Setter Property="Foreground" Value="{Binding Group.Key, Converter={StaticResource GroupColorConverter}}"/>-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="sfgrid:CaptionSummaryRowControl">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock
+                            Margin="10,0,0,0"
+                            FontWeight="Bold"
+                            Foreground="Black"
+                            Text="{Binding Key, Converter={StaticResource FirstPartConverter}}" />
+
+                        <TextBlock Foreground="{Binding Key, Converter={StaticResource GroupColorConverter}}" 
+                                   Text="{Binding Key, Converter={StaticResource SecondPartConverter}}" />
+
+                        <TextBlock Foreground="Black" 
+                                   Text="{Binding Key, Converter={StaticResource ThirdPartConverter}}" />
+
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>

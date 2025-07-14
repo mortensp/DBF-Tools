@@ -10,7 +10,7 @@ namespace DBF.BridgeMateModel
     {
         public AccessContext()
         {
-            //Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         }
 
         public AccessContext(DbContextOptions<AccessContext> options)
@@ -42,10 +42,10 @@ namespace DBF.BridgeMateModel
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                //optionsBuilder.UseAccess("DataSource=C:\\BC3\\BridgeMate\\2172\\BMDB_Section_508.bws;Other=CharSet=Windows-1252;");
-                optionsBuilder.UseAccess("DataSource=C:\\BC3\\BridgeMate\\2172\\BMDB_Section_508.bws;");
-            //optionsBuilder.UseAccess("DataSource=C:\\BC3\\BridgeMate\\2172\\BMDB_Section_508.bws;Other=CharSet=iso-8859-1;");
+                optionsBuilder.UseAccess("DataSource=C:\\BC3\\BridgeMate\\2172\\BMDB_Section_508.bws;Readonly=True;");
+                //optionsBuilder.UseAccess("DataSource=D:\\Downloads\\BMDB_Section_1222.bws;Readonly=True");
+
+            optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -54,32 +54,13 @@ namespace DBF.BridgeMateModel
             modelBuilder.Entity<BiddingDatum>(entity =>
                                               {
                                                   entity.HasNoKey();
-                                                  entity.ToTable("BiddingData", "Access");
-                                                  entity.Property(e => e.Bid).HasColumnType("varchar(5)");
-                                                  entity.Property(e => e.Board).HasColumnType("smallint");
-                                                  entity.Property(e => e.Counter).HasColumnType("smallint");
-                                                  entity.Property(e => e.DateLog).HasColumnType("datetime");
-                                                  entity.Property(e => e.Direction).HasColumnType("varchar(1)");
-                                                  entity.Property(e => e.Erased).HasColumnType("bool");
-                                                  entity.Property(e => e.Id)
-                                                        .HasColumnType("int")
-                                                        .ValueGeneratedOnAddOrUpdate()
-                                                        .HasColumnName("ID");
-                                                  entity.Property(e => e.Round).HasColumnType("smallint");
-                                                  entity.Property(e => e.Section).HasColumnType("smallint");
-                                                  entity.Property(e => e.Table).HasColumnType("smallint");
-                                                  entity.Property(e => e.TimeLog).HasColumnType("datetime");
+                                                  entity.ToTable("BiddingData", "Access");                                                  
                                               });
 
             modelBuilder.Entity<Client>(entity =>
                                         {
                                             entity.HasNoKey();
-                                            entity.ToTable("Clients", "Access");
-                                            entity.Property(e => e.Computer).HasColumnType("varchar(127)");
-                                            entity.Property(e => e.Id)
-                                                  .HasColumnType("int")
-                                                  .ValueGeneratedOnAddOrUpdate()
-                                                  .HasColumnName("ID");
+                                            entity.ToTable("Clients", "Access");                                         
                                         });
 
             modelBuilder.Entity<HandEvaluation>(entity =>
@@ -207,29 +188,13 @@ namespace DBF.BridgeMateModel
                                                 entity.HasNoKey();
                                                 entity.ToTable("PlayerNames", "Access");
                                                 entity.HasIndex(e => e.Id, "IDIndex");
-                                                entity.HasIndex(e => e.StrId, "strIDIndex");
-                                                entity.Property(e => e.Id)
-                                                      .HasColumnType("int")
-                                                      .HasColumnName("ID");
-                                                entity.Property(e => e.Name).HasColumnType("varchar(9)");
-                                                entity.Property(e => e.StrId)
-                                                      .HasColumnType("varchar(9)")
-                                                      .HasColumnName("strID");
+                                                entity.HasIndex(e => e.StrId, "strIDIndex");                                          
                                             });
 
             modelBuilder.Entity<PlayerNumber>(entity =>
                                               {
                                                   entity.HasNoKey();
                                                   entity.ToTable("PlayerNumbers", "Access");
-                                                  entity.Property(e => e.Direction).HasColumnType("varchar(1)");
-                                                  entity.Property(e => e.Name).HasColumnType("varchar(9)");
-                                                  entity.Property(e => e.Number).HasColumnType("varchar(8)");
-                                                  entity.Property(e => e.Processed).HasColumnType("bool");
-                                                  entity.Property(e => e.Round).HasColumnType("smallint");
-                                                  entity.Property(e => e.Section).HasColumnType("smallint");
-                                                  entity.Property(e => e.Table).HasColumnType("smallint");
-                                                  entity.Property(e => e.TimeLog).HasColumnType("datetime");
-                                                  entity.Property(e => e.Updated).HasColumnType("bool");
                                               });
 
             modelBuilder.Entity<ReceivedDataCount>(entity =>
@@ -376,40 +341,13 @@ namespace DBF.BridgeMateModel
             modelBuilder.Entity<Section>(entity =>
                                          {
                                              entity.HasNoKey();
-                                             entity.ToTable("Section", "Access");
-                                             entity.Property(e => e.EwmoveBeforePlay)
-                                                   .HasColumnType("smallint")
-                                                   .HasColumnName("EWMoveBeforePlay");
-                                             entity.Property(e => e.Id)
-                                                   .HasColumnType("smallint")
-                                                   .HasColumnName("ID");
-                                             entity.Property(e => e.Letter).HasColumnType("varchar(1)");
-                                             entity.Property(e => e.MissingPair).HasColumnType("smallint");
-                                             entity.Property(e => e.OnlineEventGuid)
-                                                   .HasColumnType("varchar(40)")
-                                                   .HasColumnName("OnlineEventGUID");
-                                             entity.Property(e => e.OnlineEventRoundDuration).HasColumnType("smallint");
-                                             entity.Property(e => e.ScoringType).HasColumnType("smallint");
-                                             entity.Property(e => e.Session).HasColumnType("smallint");
-                                             entity.Property(e => e.Tables).HasColumnType("smallint");
-                                             entity.Property(e => e.Winners).HasColumnType("int");
+                                             entity.ToTable("Section", "Access");                                        
                                          });
 
             modelBuilder.Entity<Session>(entity =>
                                          {
                                              entity.HasNoKey();
                                              entity.ToTable("Session", "Access");
-                                             entity.Property(e => e.Date).HasColumnType("datetime");
-                                             entity.Property(e => e.Guid)
-                                                   .HasColumnType("varchar(40)")
-                                                   .HasColumnName("GUID");
-                                             entity.Property(e => e.Id)
-                                                   .HasColumnType("smallint")
-                                                   .HasColumnName("ID");
-                                             entity.Property(e => e.Name).HasColumnType("varchar(20)");
-                                             entity.Property(e => e.ShowInApp).HasColumnType("bool");
-                                             entity.Property(e => e.Status).HasColumnType("smallint");
-                                             entity.Property(e => e.Time).HasColumnType("datetime");
                                          });
 
             modelBuilder.Entity<Setting>(entity =>
@@ -437,26 +375,23 @@ namespace DBF.BridgeMateModel
 
             modelBuilder.Entity<Table>(entity =>
                                        {
-                                           entity.HasNoKey();
                                            entity.ToTable("Tables", "Access");
-                                           entity.Property(e => e.ComputerId)
-                                                 .HasColumnType("smallint")
-                                                 .HasColumnName("ComputerID");
-                                           entity.Property(e => e.CurrentBoard).HasColumnType("smallint");
-                                           entity.Property(e => e.CurrentRound).HasColumnType("smallint");
-                                           entity.Property(e => e.Group).HasColumnType("smallint");
-                                           entity.Property(e => e.LogOnOff).HasColumnType("smallint");
-                                           entity.Property(e => e.Section).HasColumnType("smallint");
-                                           entity.Property(e => e.Status).HasColumnType("smallint");
-                                           entity.Property(e => e.Table1)
-                                                 .HasColumnType("smallint")
-                                                 .HasColumnName("Table");
-                                           entity.Property(e => e.UpdateFromRound).HasColumnType("smallint");
                                        });
 
             OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        // Read-Only access to the database!
+        public override int SaveChanges()
+        {
+            throw new InvalidOperationException("Denne context er readonly.");
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            throw new InvalidOperationException("Denne context er readonly.");
+        }
     }
 }

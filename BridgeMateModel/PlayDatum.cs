@@ -11,8 +11,8 @@ namespace DBF.BridgeMateModel
         public short? Round { get; set; }
         public short? Board { get; set; }
         public short? Counter { get; set; }
-        public string? Direction { get; set; }
-        public string? Card { get; set; }
+        public string  Direction { get; set; }
+        public string  Card { get; set; }
         public DateTime? DateLog { get; set; }
         public DateTime? TimeLog { get; set; }
         public bool? Erased { get; set; }

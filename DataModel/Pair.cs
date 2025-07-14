@@ -8,8 +8,8 @@ using System.Xml.Serialization;
 
 namespace DBF.DataModel
 {
-    //[DebuggerDisplay("{PairNo,2} {Players[0].TeamName} - {Players[1].TeamName}")]
-    [XmlRoot(ElementName = "Pair")]
+
+    //[DebuggerDisplay("{PairNo,2} {Players[0].TeamName} - {Players[1].TeamName}")]     [XmlRoot(ElementName = "Pair")]
     public class Pair : IEquatable<Pair>
     {
 
@@ -21,7 +21,7 @@ namespace DBF.DataModel
         ////[DeepCopyConstructor]
         //public Pair(Pair other)
         //{
-        //    Group = other.Group;
+        //    Title = other.Title;
         //    PairNoStr = other.PairNoStr;
         //    Players = new List<Player>(other.Players.Select(p => new Player(p)));
         //}
@@ -41,7 +41,7 @@ namespace DBF.DataModel
         public decimal TournamentResult   => TournamentResultStr.AsDecimal();
         public decimal HACTotal           => HACTotalStr.AsDecimal();
         public int     HACRankTotal       => HACRankTotalStr.AsInt();
-        public                                                    string       Group                 { get; set; }
+        public                                                    string       Title                 { get; set; }
 
         ///-----
         [XmlAttribute(AttributeName = "No")]               public string       PairNoStr             { get; set; }
@@ -77,8 +77,7 @@ namespace DBF.DataModel
         [XmlElement(ElementName = "HACDelta")]             public string       HACDelta              { get; set; }
 
         // Håndtering af afvigende navne i XML
-        [XmlAttribute(AttributeName = "Direction")]
-        public string DirectionStr
+        [XmlAttribute(AttributeName = "Direction")]         public string DirectionStr
         {
             set
             {

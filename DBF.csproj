@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+	
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net8.0-windows</TargetFramework>
@@ -63,19 +63,26 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CData.Access" Version="24.0.9175" />
-		<PackageReference Include="CData.Access.EntityFrameworkCore" Version="24.0.9175" />
+		<!--<PackageReference Include="CData.Access" Version="24.0.9175" />
+		<PackageReference Include="CData.Access.EntityFrameworkCore" Version="24.0.9175" />-->
+		
+		<Reference Include="CData.EntityFrameworkCore.Access">
+			<HintPath>C:\Program Files\CData\CData ADO.NET Provider for Microsoft Access 2024\lib\net8.0\EFCORE80\CData.EntityFrameworkCore.Access.dll</HintPath>
+		</Reference>
+		<Reference Include="System.Data.CData.Access">
+			<HintPath>C:\Program Files\CData\CData ADO.NET Provider for Microsoft Access 2024\lib\net8.0\System.Data.CData.Access.dll</HintPath>
+		</Reference>
 	</ItemGroup>
 
 	<ItemGroup>
 		<!--Bemærk, at CDATA ADO.Net her kun virker med entity framework 6 -->
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.36" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.36">
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.36" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.36">
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
@@ -152,6 +159,8 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
+
+
 
 	
 

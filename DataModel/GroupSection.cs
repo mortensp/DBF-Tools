@@ -1,17 +1,18 @@
 ﻿using System.Data.SqlTypes;
+using System.Globalization;
 using System.Xml.Serialization;
 
 namespace DBF.DataModel
 {
-    [XmlRoot(ElementName = "Section")]
-    public class GroupSection
+    [XmlRoot(ElementName = "Section")]     public class GroupSection
     {
         public decimal MeanScore  => MeanScoreStr.AsDecimal();
         public decimal AvgHAC     => AvgHACStr.AsDecimal();
         public int     SectionNo         => SectionNoStr.AsInt();
-
+        public string Group => Tournament.Group;
+        
         //-----
-        [XmlElement(ElementName = "Date")]                  public string      Date              { get; set; }
+        [XmlElement(ElementName = "Date")]                  public string      DateStr           { get; set; }
         [XmlElement(ElementName = "Start")]                 public string      Start             { get; set; }
         [XmlElement(ElementName = "End")]                   public string      End               { get; set; }
         [XmlElement(ElementName = "MeanScore")]             public string      MeanScoreStr      { get; set; }

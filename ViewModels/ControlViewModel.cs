@@ -20,6 +20,7 @@ using DBF.BridgeMateModel;
 using DBF.DataModel;
 using DBF.UserControls;
 using DBF.Views;
+using Microsoft.DotNet.DesignTools.Protocol.Values;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -41,21 +42,21 @@ namespace DBF.ViewModels
         //static string path = @"C:\BC3\Hjemmeside - Kopi\Resultater_2172\";
         private readonly IWindowManager _windowManager;
 
-        private          Club                                    selectedClub;
-        private          UserControl                             startListControl = new StartListControl();
-        private          UserControl                             timersPanel      = new TimersPanel() { ButtonsVisibility = Visibility.Collapsed };
-        private          UserControl                             resultsControl   = new ResultsControl();
-        private          UserControl                             currentView;
-        private          MainClub                                selectedMainClub;
-        private          PlayingTime                             playingTime;
-        private          List <Tournament>                       tournaments;
-        private          List <GroupSection>                     groupSection;
-        private          JsonSerializerOptions                   JsonOptions      = new JsonSerializerOptions { Converters = { new DecimalCommaConverter() } };
-        private          Encoding                                iso_8859_1       = System.Text.Encoding.GetEncoding("iso-8859-1");
-        private          ObservableCollection <PlayingTime>      spilleDage       = [];
+        private Club              selectedClub;
+        private UserControl       startListControl = new StartListControl();
+        private UserControl       timersPanel      = new TimersPanel() { ButtonsVisibility = Visibility.Collapsed };
+        private UserControl       resultsControl   = new ResultsControl();
+        private UserControl       currentView;
+        private MainClub          selectedMainClub;
+        private PlayingTime       playingTime;
+        private List <Tournament> tournaments;
+
+        private          JsonSerializerOptions                   JsonOptions    = new JsonSerializerOptions { Converters = { new DecimalCommaConverter() } };
+        private          Encoding                                iso_8859_1     = System.Text.Encoding.GetEncoding("iso-8859-1");
+        private          ObservableCollection <PlayingTime>      spilleDage     = [];
         private          FileSystemWatcher                       watcher;
         private          int                                     sectionNo;
-        private readonly ConcurrentDictionary <string, DateTime> _lastFileEvent   = new();
+        private readonly ConcurrentDictionary <string, DateTime> _lastFileEvent = new();
 
         #region Constructors
             public ControlViewModel(IWindowManager windowManager, Configuration configuration)
@@ -73,7 +74,7 @@ namespace DBF.ViewModels
 
                 //using (var db = new AccessContext())
                 //{
-                //    //var players = db.PlayerNames.ToList();
+                //    var list = db.Tables.ToList();
                 //}
                 LoadMainClub();
             }
@@ -94,6 +95,7 @@ namespace DBF.ViewModels
 
             // MainClubs
             public ObservableCollection<MainClub> MainClubs             { get; set; } = [];
+            //
             public MainClub SelectedMainClub
             {
                 get => selectedMainClub;
@@ -129,6 +131,7 @@ namespace DBF.ViewModels
 
             // Clubs
             public ObservableCollection<Club>     Clubs                 { get; set; } = [];
+            //
             public Club SelectedClub
             {
                 get => selectedClub;
@@ -153,18 +156,14 @@ namespace DBF.ViewModels
                 }
             }
 
+            //
             public PlayingTime SelectedPlayingTime
             {
                 get => playingTime;
                 set
                 {
                     if (Set(ref playingTime, value))
-                    {
-                        ErrorMessage = "";                    
-                        Pairs.Clear();
-                        Teams.Clear();
                         FetchPlayingTime();
-                    }
                 }
             }
 
@@ -179,7 +178,9 @@ namespace DBF.ViewModels
                 }
             }
 
-            public bool HideTournamentSummery { get; set; } = false;
+            public bool                           HideTournamentSummery { get; set; } = false;
+            public DateTime             Date { get; set; }
+            public List<GroupSection> GroupSections { get; set; }
             public BindableCollection<Pair>       Pairs                 { get; set; } = [];
             public BindableCollection<Team>       Teams                 { get; set; } = [];
             public string                         ErrorMessage          { get; set; }
@@ -243,9 +244,9 @@ namespace DBF.ViewModels
                 PlayingTimes = SelectedClub is null
                              ? SelectedMainClub.Clubs
                                                .SelectMany(club => club.MainTournaments)
-                                               .SelectMany(mt => mt.PlayingTime).OrderByDescending(s => s.Dato).ToObservableCollection()
+                                               .SelectMany(mt => mt.PlayingTime).OrderByDescending(s => s.Date).ToObservableCollection()
                              : SelectedClub.MainTournaments
-                                           .SelectMany(mt => mt.PlayingTime).OrderByDescending(s => s.Dato).ToObservableCollection();
+                                           .SelectMany(mt => mt.PlayingTime).OrderByDescending(s => s.Date).ToObservableCollection();
             }
 
             /// <summary>
@@ -253,49 +254,55 @@ namespace DBF.ViewModels
             /// </summary>
             private void FetchPlayingTime()
             {
+                ErrorMessage = "";
+                Pairs.Clear();
+                Teams.Clear();
+
                 tournaments = getTournaments(playingTime);
 
                 if (tournaments.Count == 0)
                     return;
 
-                groupSection = getGroupSections(playingTime, tournaments);
+                GroupSections = getGroupSections(playingTime, tournaments);
 
-                //foreach (var grp in groupSection)
-                for (var grpNo = 0; grpNo <  groupSection.Count; grpNo++)
+                Date = playingTime.Date;
+
+                //foreach (var grp in GroupSections)
+                for (var grpNo = 0; grpNo <  GroupSections.Count; grpNo++)
                 {
-                    var grp = groupSection[grpNo];
+                    var grp = GroupSections[grpNo];
 
                     if (grp.Tournament.TournamentType.Text == "Parturnering")
                     {
                         if (grp.Resultlist is not null)
                             foreach (var pair in grp.Resultlist.Pairs)
                             {
-                                pair.Group = grp.Tournament.Group;
+                                pair.Title = grp.Tournament.Title;
                                 Pairs.Add(pair.DeepCopy());
                             }
 
                         if (grp.Startlist is not null)
                             foreach (var pair in grp.Startlist.Pairs)
                             {
-                                var res = Pairs.FirstOrDefault(p => p.Group == grp.Tournament.Group && p.PairNo == pair.PairNo);
+                                var res = Pairs.FirstOrDefault(p => p.Title == grp.Tournament.Title && p.PairNo == pair.PairNo);
 
                                 if (res is null)
                                 {
-                                    pair.Group = grp.Tournament.Group;
+                                    pair.Title = grp.Tournament.Title;
                                     Pairs.Add(pair.DeepCopy());
                                 }
                                 else
                                     res.StartPos = pair.StartPos;
                             }
 
-                    if (Pairs.Count > 0)
-                        Pairs = new BindableCollection<Pair>(Pairs.OrderBy(p => p.SectionRank));
-                }
+                        if (Pairs.Count >  0)
+                            Pairs = new BindableCollection<Pair>(Pairs.OrderBy(p => p.SectionRank));
+                    }
                     else
                     {
                         foreach (var team in grp.Rounds[0].Startlist.Teams)
                         {
-                            team.Group = grp.Tournament.Group;
+                            team.Title = grp.Tournament.Title;
                             Teams.Add(team);
                         }
 
@@ -303,7 +310,7 @@ namespace DBF.ViewModels
                         var rnd = grp.Rounds[^1];
 
                         if (rnd is not null && rnd.RoundCompleted)
-                            foreach (var team in Teams.Where(t => t.Group == grp.Tournament.Group))
+                            foreach (var team in Teams.Where(t => t.Title == grp.Tournament.Title))
                             {
                                 var sta = rnd.Startlist.Teams.FirstOrDefault(t => t.TeamNo == team.TeamNo);
 
@@ -322,7 +329,7 @@ namespace DBF.ViewModels
                                 }
                             }
                         else
-                            ErrorMessage = "Runden er endnu ikke afsluttet eller er ikke sendt til hjemmesiden!!";
+                            ErrorMessage = "Den aktuelle sektion er endnu ikke afsluttet eller er ikke sendt til hjemmesiden!!";
 
                         foreach (var sectionFile in tournaments[grpNo].SectionFiles.Where(f => f.No <  grp.SectionNo))
                         {
@@ -331,7 +338,7 @@ namespace DBF.ViewModels
                             rnd = earlierSection.Rounds[^1];
 
                             if (rnd is not null && rnd.RoundCompleted)
-                                foreach (var team in Teams.Where(t => t.Group == grp.Tournament.Group))
+                                foreach (var team in Teams.Where(t => t.Title == grp.Tournament.Title))
                                 {
                                     var res = rnd.Resultlist.Teams.FirstOrDefault(t => t.TeamNo == team.TeamNo);
 
@@ -339,13 +346,13 @@ namespace DBF.ViewModels
                                         team.TotalKP += res.KP ?? 0;
                                 }
                             else
-                                ErrorMessage = $"Runden d. {sectionFile.Date} kl. {sectionFile.Start} er endnu ikke afsluttet eller er ikke sendt til hjemmesiden!";
+                                ErrorMessage = $"Runden d. {earlierSection.DateStr} er endnu ikke afsluttet eller er ikke sendt til hjemmesiden!";
                         }
 
                         // Sort teams by TotalKP
                         var totalRank = 1;
 
-                        foreach (var team in Teams.Where(t => t.Group == grp.Tournament.Group).OrderByDescending(t => t.TotalKP))
+                        foreach (var team in Teams.Where(t => t.Title == grp.Tournament.Title).OrderByDescending(t => t.TotalKP))
                             team.TournamentRank = totalRank++;
                     }
 
@@ -357,7 +364,10 @@ namespace DBF.ViewModels
                 NotifyOfPropertyChange(nameof(Teams));
 
                 // Restore Taskbar Icon.
-                Application.Current.MainWindow.Icon = BitmapFrame.Create(new Uri("pack://application:,,,/Images/DBF_Tools.ico", UriKind.Absolute));
+                Execute.OnUIThread(() =>
+                                   {
+                                       Application.Current.MainWindow.Icon = BitmapFrame.Create(new Uri("pack://application:,,,/Images/DBF_Tools.ico", UriKind.Absolute));
+                                   });
             }
 
             private MainClub loadMainClub(int no)
@@ -368,7 +378,6 @@ namespace DBF.ViewModels
                 if (mainclub.Clubs is null)
                 {
                     System.Threading.Thread.Sleep(1000);
-                    //await Task.Delay(1000);
                     mainclub = deserialize<MainClub>(path + @"Main.xml");
                 }
 
@@ -410,23 +419,23 @@ namespace DBF.ViewModels
 
                                 foreach (var playingTimeNew in playingTimesNew)
                                 {
-                                    var playingTimeOld = PlayingTimes.FirstOrDefault(pt => pt.Dato == playingTimeNew.Dato);
+                                    var playingTimeOld = PlayingTimes.FirstOrDefault(pt => pt.Date == playingTimeNew.Date);
 
                                     if (playingTimeOld is null)
                                         for (var i = 0; i <  PlayingTimes.Count; i++)
                                         {
-                                            if (PlayingTimes[i].Dato <  playingTimeNew.Dato)
+                                            if (PlayingTimes[i].Date <  playingTimeNew.Date)
                                             {
                                                 Execute.OnUIThread(() => PlayingTimes.Insert(i, playingTimeNew));
                                                 break;
                                             }
                                         }
                                     else
-                                        if (playingTimeOld.Dato == playingTimeNew.Dato)
+                                        if (playingTimeOld.Date == playingTimeNew.Date)
                                         {
                                             //var updatedFile = false;
                                             //var date        = new DateTime(2025, 04, 30, 18, 45, 0);
-                                            //var oldDate     = playingTimeOld.Dato;
+                                            //var oldDate     = playingTimeOld.Date;
 
                                             //if (oldDate == date)
                                             //    Debugger.Break();
@@ -437,7 +446,7 @@ namespace DBF.ViewModels
                                                 if (fileOld is null)
                                                 {
                                                     foreach (var file in playingTimeOld.TournamentFiles)
-                                                    watcher.Filters.Remove(SelectedMainClub.Path + file.FileName);
+                                                    watcher.Filters.Remove(file.FileName);
 
                                                     Execute.OnUIThread(() => playingTimeOld.TournamentFiles = playingTimeNew.TournamentFiles);
                                                     SelectedPlayingTime = null;
@@ -469,6 +478,9 @@ namespace DBF.ViewModels
 
             private List<Tournament> getTournaments(PlayingTime pt)
             {
+                foreach (var pathName in watcher.Filters.Where(f => f.StartsWith("MT")).ToList())
+                    watcher.Filters.Remove(pathName);
+
                 List <Tournament> tournaments = new();
 
                 if (pt is null || pt.TournamentFiles is null)
@@ -478,13 +490,13 @@ namespace DBF.ViewModels
                     {
                         var path       = SelectedMainClub.Path + tournamentFile.FileName;
                         var tournament = deserialize<Tournament>(path);
-                        watcher.Filters.Add(path);
+                        watcher.Filters.Add(tournamentFile.FileName);
 
                         if (tournament is null)
                             if (string.IsNullOrEmpty(ErrorMessage))
-                            ErrorMessage = $"Data for '{tournamentFile.GroupName}' er ikke sendt til hjemmesiden";
-                        else
-                            ErrorMessage = $"Data er ikke sendt til hjemmesiden";                                                            
+                                ErrorMessage = $"Data for '{tournamentFile.GroupName}' er ikke sendt til hjemmesiden";
+                            else
+                                ErrorMessage = $"Data er ikke sendt til hjemmesiden";
                         else
                         {
                             tournament.SectionNo = tournamentFile.Section?.SectionNo ?? 1;
@@ -500,14 +512,14 @@ namespace DBF.ViewModels
                 List <GroupSection> sections = new();
                 SectionNo                    = 1;
 
-                foreach (var pathName in watcher.Filters.Where(f => f.StartsWith(SelectedMainClub.Path + "GT")).ToList())
+                foreach (var pathName in watcher.Filters.Where(f => f.StartsWith("GT")).ToList())
                     watcher.Filters.Remove(pathName);
 
                 foreach (var tur in tournaments)
                 {
                     var path    = SelectedMainClub.Path + tur.SectionFile.FileName;
                     var section = deserialize<GroupSection>(path);
-                    watcher.Filters.Add(path);
+                    watcher.Filters.Add(tur.SectionFile.FileName);
 
                     if (section != null)
                     {
@@ -526,7 +538,7 @@ namespace DBF.ViewModels
             {
                 var path    = SelectedMainClub.Path + fileName;
                 var section = deserialize<GroupSection>(path);
-                watcher.Filters.Add(path);
+                watcher.Filters.Add(fileName);
 
                 if (section != null)
                     section.Tournament = tournament;
@@ -548,14 +560,11 @@ namespace DBF.ViewModels
                     _lastFileEvent.TryAdd(e.FullPath, now);
 
                 if (e.ChangeType == WatcherChangeTypes.Changed)
-                {
-                    Debug.WriteLine($"File changed: {e.Name}");
-
+                    //Debug.WriteLine($"File changed: {e.Name}");
                     if (e.Name == "Main.XML")
                         reloadMain();
                     else
-                        ; //todo: Empty Statement!! 
-                }
+                        FetchPlayingTime();
                 else
                     if (e.ChangeType == WatcherChangeTypes.Created)
                         Debug.WriteLine($"File created: {e.Name}");
@@ -604,15 +613,16 @@ namespace DBF.ViewModels
                 }
             }
 
-            //[DllImport("user32.dll")]
-            //public static extern int ChangeDisplaySettingEx(string lpszDeviceName, ref DEVMODE lpDevMode, IntPtr hwnd, int dwflags, IntPtr lParam);
+            //[DllImport("user32.dll")]             //public static extern int ChangeDisplaySettingEx(string lpszDeviceName, ref DEVMODE lpDevMode, IntPtr hwnd, int dwflags, IntPtr lParam);
             private async Task ShowProjector()
             {
                 var screens = WpfScreenHelper.Screen.AllScreens.ToList();
 
-                if (screens.Count < 2)
+#if RELEASE
+                if (screens.Count <  2)
                     MessageBox.Show("Der er ikke oprettet forbindelse til en sekundær skærm. Tast Win+K", "Info");
                 else
+#endif
                 {
                     var screenTwo = screens[^1]; // Get the second screen (index 1)
 

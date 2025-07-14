@@ -3,8 +3,7 @@ using System.Xml.Serialization;
 
 namespace DBF.DataModel
 {
-    [XmlRoot(ElementName = "Club")]
-    public class Club : IEquatable<Club>
+    [XmlRoot(ElementName = "Club")]     public class Club : IEquatable<Club>
     {
         [XmlAttribute(AttributeName = "Name")]     public string               Name           { get; set; }
         [XmlAttribute(AttributeName = "Id")]       public string               Id             { get; set; }

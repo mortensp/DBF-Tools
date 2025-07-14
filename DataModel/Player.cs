@@ -4,8 +4,7 @@ using System.Xml.Serialization;
 
 namespace DBF.DataModel
 {
-    [XmlRoot(ElementName = "Player")]
-    public class Player : IEquatable<Player>
+    [XmlRoot(ElementName = "Player")]     public class Player : IEquatable<Player>
     {
         //public Player()
         //{

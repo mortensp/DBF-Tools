@@ -12,11 +12,11 @@ namespace DBF.BridgeMateModel
         public short? PairNs { get; set; }
         public short? PairEw { get; set; }
         public short? Declarer { get; set; }
-        public string? NsEw { get; set; }
-        public string? Contract { get; set; }
-        public string? Result { get; set; }
-        public string? LeadCard { get; set; }
-        public string? Remarks { get; set; }
+        public string  NsEw { get; set; }
+        public string  Contract { get; set; }
+        public string  Result { get; set; }
+        public string  LeadCard { get; set; }
+        public string  Remarks { get; set; }
         public bool? Erased { get; set; }
     }
 }

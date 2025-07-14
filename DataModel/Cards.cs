@@ -17,7 +17,7 @@ namespace DBF.DataModel
         [XmlElement(ElementName = "Clubs")]    public string Clubs    { get; set; }
     }
 
-    [XmlRoot(ElementName = "Boards")]
+    [XmlRoot(ElementName = "Boards")]    
     public class Boards
     {
         [XmlElement(ElementName = "Boardspec")] public Boardspec Boardspec { get; set; }

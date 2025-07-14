@@ -3,8 +3,7 @@ using System.Xml.Serialization;
 
 namespace DBF.DataModel
 {
-    [XmlRoot(ElementName = "Round")]
-    public class Round : IEquatable<Round>
+    [XmlRoot(ElementName = "Round")]     public class Round : IEquatable<Round>
     {
         public bool RoundCompleted => RoundCompletedStr.AsBool();
         public int  HalfNo         => HalfNoStr.AsInt();

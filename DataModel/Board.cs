@@ -4,8 +4,7 @@ using Syncfusion.Windows.Shared;
 
 namespace DBF.DataModel
 {
-    [XmlRoot(ElementName = "Board")]
-    public class Board : IEquatable<Board>
+    [XmlRoot(ElementName = "Board")]     public class Board : IEquatable<Board>
     {
         public decimal DatumScore => DatumScoreStr.AsDecimal();
         public int     TricksS    => TricksStr.AsInt();

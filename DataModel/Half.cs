@@ -2,8 +2,7 @@
 
 namespace DBF.DataModel
 {
-    [XmlRoot(ElementName = "Half")]
-    public class Half : IEquatable<Half>
+    [XmlRoot(ElementName = "Half")]     public class Half : IEquatable<Half>
     {
         public int No => NoStr.AsInt();
 

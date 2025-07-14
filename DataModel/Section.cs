@@ -3,8 +3,7 @@ using System.Xml.Serialization;
 
 namespace DBF.DataModel
 {
-    [XmlRoot(ElementName = "Section")]
-    public class Section
+    [XmlRoot(ElementName = "Section")]     public class Section
     {
         public                                             int    SectionNo    { get; set; }
 
